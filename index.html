@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="dark"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Web Cá Nhân - Hoàng Cao Thống (caothongdev)</title>
+    <meta name="description" content="Trang web cá nhân của Hoàng Cao Thống (caothongdev) - Developer, Designer. Khám phá các kỹ năng, dự án và thông tin liên hệ.">
+    <meta name="keywords" content="Hoàng Cao Thống, caothongdev, developer, designer, web developer, personal website, portfolio, lập trình viên, thiết kế web, trang web cá nhân">
+    <meta name="author" content="Hoàng Cao Thống">
+    <meta name="theme-color" content="#0D1117" id="theme-color-meta">
+
+    <link rel="icon" href="assets/favicon-dark.png" type="image/png" id="favicon">
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="YOUR_WEBSITE_URL"> <meta property="og:title" content="Trang Web Cá Nhân - Hoàng Cao Thống (caothongdev)">
+    <meta property="og:description" content="Khám phá trang web cá nhân của Hoàng Cao Thống - Developer, Designer. Xem các kỹ năng, dự án và thông tin liên hệ.">
+    <meta property="og:image" content="YOUR_PREVIEW_IMAGE_URL"> <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="YOUR_WEBSITE_URL"> <meta property="twitter:title" content="Trang Web Cá Nhân - Hoàng Cao Thống (caothongdev)">
+    <meta property="twitter:description" content="Khám phá trang web cá nhân của Hoàng Cao Thống - Developer, Designer. Xem các kỹ năng, dự án và thông tin liên hệ.">
+    <meta property="twitter:image" content="YOUR_PREVIEW_IMAGE_URL"> <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <audio id="background-audio" loop preload="metadata">
+        <source src="assets/yung_kai-blue.mp3" type="audio/mpeg">
+        Trình duyệt của bạn không hỗ trợ phát âm thanh.
+    </audio>
+
+    <div id="loading-screen" class="screen active">
+        <div class="loading-bar-container"> <div class="loading-bar"></div>
+        </div>
+        <div class="loading-content">
+            <img src="assets/rem.gif" alt="Ảnh đại diện caothong.dev đang tải" class="loading-avatar" loading="eager">
+            <h1>caothong.dev</h1>
+            <p id="loading-message">Bình tĩnh nào cọu, đừng quạu liền nha cọu ơi!</p>
+        </div>
+    </div>
+
+    <div id="lobby-screen" class="screen lobby-background">
+        <div class="lobby-content">
+            <div class="lobby-icon">
+                <img src="assets/rem.gif" alt="Biểu tượng trang chờ của caothong.dev" class="loading-avatar" loading="lazy">
+            </div>
+            <h2>caothong.dev</h2>
+            <p id="lobby-slogan" class="typing-effect-target">...</p> <div id="music-selector-container">
+                <img src="assets/spotify.png" alt="Biểu tượng chọn nhạc nền" id="music-selector-icon" loading="lazy">
+            </div>
+        </div>
+    </div>
+
+    <div id="song-selection-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="song-modal-title">
+        <div class="modal-content">
+            <h3 id="song-modal-title">Chọn nhạc nền</h3>
+            <ul id="song-list" aria-label="Danh sách bài hát">
+                <li data-src="assets/yung_kai-blue.mp3" tabindex="0">Yung Kai - Blue</li>
+                <li data-src="assets/another-song.mp3" tabindex="0">Lofi Chill #1</li> <li data-src="assets/third-song.mp3" tabindex="0">Relaxing Beats #2</li> </ul>
+            <button id="close-modal-song" class="btn btn-secondary btn-small">Đóng</button>
+        </div>
+    </div>
+    
+    <div id="cursor-trail"></div>
+    <div id="custom-cursor-element"></div>
+
+
+    <main id="main-content" class="screen">
+        <div class="main-container">
+            <header class="profile-header">
+                <div class="profile-avatar-container"> <img src="assets/rem.gif" alt="Ảnh đại diện chính của Hoàng Cao Thống" class="profile-avatar lightbox-trigger" loading="lazy">
+                    <div class="avatar-glow-ring"></div>
+                </div>
+                <div class="profile-details">
+                    <h1>
+                        caothongdev
+                        <span class="verified-badge" aria-label="Tài khoản đã xác minh" title="Đã xác minh">
+                            <i class="fas fa-check"></i> </span>
+                        <span class="online-status-indicator" title="Đang hoạt động"></span> </h1>
+                    <p class="profile-tagline typing-effect-target">Developer | Designer | Dream Chaser</p> <div class="profile-meta">
+                        <span>
+                            <i class="fas fa-map-marker-alt icon"></i> Vietnam / Can Tho
+                        </span>
+                        <a href="https://github.com/caothongdev" target="_blank" rel="noopener noreferrer me" title="Truy cập GitHub của caothongdev">
+                            <i class="fab fa-github icon"></i> My Github
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <section id="bio" class="content-section" aria-labelledby="bio-heading" data-animation="slideInUp"> <h2 id="bio-heading">Giới thiệu về tôi 💻</h2>
+                <p>
+                    Tôi là <strong>Hoàng Cao Thống</strong>, một lập trình viên trẻ tuổi đầy đam mê với mục tiêu rõ ràng: biến công nghệ thành công cụ để kiếm tiền, xây dựng thương hiệu cá nhân và giúp đỡ người khác phát triển.
+                </p>
+                <p class="typing-effect-target" data-type-text="Tôi bắt đầu từ con số 0, không có nền tảng lập trình sẵn, nhưng tôi không ngừng học hỏi, thực hành và xây dựng. Từ việc tự học Python để làm bot Discord, tools, và các website bán hàng, tôi đang dần tạo ra những sản phẩm thực tế và hữu ích, phục vụ cho cộng đồng và cho chính sự nghiệp của mình.">
+                    {/* Nội dung sẽ được JS gõ vào */}
+                </p>
+                <div id="bio-extended-content" class="visually-hidden">
+                    <h3 class="bio-focus-heading">Định hướng và Mục tiêu:</h3>
+                    <p>Với niềm tin vào sức mạnh của công nghệ và tinh thần không ngừng học hỏi, tôi đặt mục tiêu trở thành một Full-Stack Developer có khả năng xây dựng các giải pháp toàn diện, từ front-end đến back-end, và cả mảng DevOps để tối ưu hóa quy trình phát triển.</p>
+                    <p>Xa hơn nữa, tôi mong muốn xây dựng một cộng đồng nơi các lập trình viên trẻ có thể chia sẻ kiến thức, hỗ trợ lẫn nhau và cùng phát triển, đặc biệt là những bạn có xuất phát điểm tương tự như tôi.</p>
+                    <h3 class="bio-focus-heading">Triết lý làm việc:</h3>
+                    <p>"Code không chỉ là những dòng lệnh, đó là sự sáng tạo, là giải pháp cho các vấn đề thực tế. Tôi luôn cố gắng viết code sạch, dễ hiểu và dễ bảo trì."</p>
+                </div>
+                <h3 class="bio-focus-heading">Hiện tại, tôi đang tập trung phát triển:</h3>
+                <ul class="bio-focus-list">
+                    <li><span class="bio-focus-icon" aria-hidden="true">🛒</span> Website bán hàng (dịch vụ số, cày thuê, YouTube Premium…)</li>
+                    <li><span class="bio-focus-icon" aria-hidden="true">🤖</span> Bot Discord hỗ trợ AI, thanh toán và tự động hóa dịch vụ</li>
+                    <li><span class="bio-focus-icon" aria-hidden="true">🎬</span> Thương hiệu cá nhân về lập trình thông qua các video nội dung ngắn</li>
+                    <li><span class="bio-focus-icon" aria-hidden="true">⚙️</span> Các công cụ tự động hóa giúp tối ưu quy trình và tăng thu nhập</li>
+                </ul>
+                <p class="bio-motivation">
+                    Tôi luôn khao khát tự do tài chính, phát triển bản thân và giúp gia đình thoát khỏi khó khăn. Dù còn trẻ, nhưng tôi sẵn sàng làm việc 9–11 tiếng mỗi ngày để theo đuổi ước mơ.
+                </p>
+                <div class="mt-3">
+                    <button id="bio-learn-more-btn" class="btn btn-secondary btn-small" aria-expanded="false" aria-controls="bio-details-modal">
+                        Tìm hiểu thêm về tôi
+                    </button>
+                </div>
+            </section>
+
+            <section id="featured-links" class="content-section" aria-labelledby="featured-links-heading" data-animation="zoomIn">
+                <h2 id="featured-links-heading">Dự án nổi bật 🚀</h2>
+                <div class="projects-carousel-wrapper"> <div class="featured-links-grid projects-grid">
+                        <article class="project-item">
+                            <div class="project-image-container">
+                                <img src="assets/store.png" alt="Light Store - Dịch vụ tài khoản Premium và cày game uy tín" class="featured-link-thumbnail lightbox-trigger" loading="lazy">
+                                <div class="project-image-overlay">
+                                    <p>Cửa hàng dịch vụ số và game đáng tin cậy, giá cả phải chăng.</p>
+                                </div>
+                            </div>
+                            <h3>Light Store</h3>
+                            <div class="project-tech-badges">
+                                <span class="tech-badge python">Python</span>
+                                <span class="tech-badge flask">Flask</span>
+                                <span class="tech-badge js">JavaScript</span>
+                                <span class="tech-badge html">HTML</span>
+                                <span class="tech-badge css">CSS</span>
+                            </div>
+                            <p>
+                                Sở hữu tài khoản <strong>Spotify, YouTube Premium, Netflix</strong> và các dịch vụ số khác với giá cực tốt, bảo hành uy tín. Hoặc nâng tầm trải nghiệm game với dịch vụ <strong>cày game thuê chuyên nghiệp, an toàn</strong>. Khám phá ngay!
+                            </p>
+                            <div class="featured-link-actions">
+                                <a href="https://lightshopvn.com" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Ghé Shop Ngay</a>
+                                <a href="#link-github-lightstore" class="btn btn-secondary btn-small" target="_blank" rel="noopener noreferrer">Xem Mã Nguồn</a>
+                            </div>
+                        </article>
+
+                        <article class="project-item">
+                             <div class="project-image-container">
+                                <img src="assets/project-placeholder-2.png" alt="Mô tả dự án Bot Discord AI" class="featured-link-thumbnail lightbox-trigger" loading="lazy"> <div class="project-image-overlay">
+                                    <p>Bot Discord đa năng tích hợp AI, tự động hóa và nhiều tiện ích.</p>
+                                </div>
+                            </div>
+                            <h3>AI Discord Bot</h3>
+                             <div class="project-tech-badges">
+                                <span class="tech-badge python">Python</span>
+                                <span class="tech-badge discordpy">Discord.py</span>
+                                <span class="tech-badge api">APIs</span>
+                            </div>
+                            <p>
+                                Bot Discord thông minh tích hợp AI, hỗ trợ quản lý server, cung cấp tiện ích và tự động hóa các tác vụ thanh toán dịch vụ trực tiếp trên Discord.
+                            </p>
+                            <div class="featured-link-actions">
+                                <a href="#link-moi-discord-bot" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Mời Bot</a>
+                                <a href="#link-github-discordbot" class="btn btn-secondary btn-small" target="_blank" rel="noopener noreferrer">Xem Mã Nguồn</a>
+                            </div>
+                        </article>
+                        
+                         <article class="project-item">
+                             <div class="project-image-container">
+                                <img src="assets/project-placeholder-3.png" alt="Mô tả dự án Website Cá Nhân Portfolio" class="featured-link-thumbnail lightbox-trigger" loading="lazy"> <div class="project-image-overlay">
+                                    <p>Trang web portfolio cá nhân bạn đang xem, thể hiện kỹ năng và dự án.</p>
+                                </div>
+                            </div>
+                            <h3>Portfolio Cá Nhân</h3>
+                             <div class="project-tech-badges">
+                                <span class="tech-badge html">HTML5</span>
+                                <span class="tech-badge css">CSS3</span>
+                                <span class="tech-badge js">JavaScript</span>
+                            </div>
+                            <p>
+                                Trang web cá nhân này được xây dựng để giới thiệu bản thân, kỹ năng và các dự án đã thực hiện. Thiết kế responsive, tối ưu trải nghiệm người dùng.
+                            </p>
+                            <div class="featured-link-actions">
+                                <a href="https://github.com/caothongdev/YOUR_PORTFOLIO_REPO" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Xem trên GitHub</a>
+                            </div>
+                        </article>
+                    </div>
+                    <button class="carousel-control prev" aria-label="Dự án trước"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-control next" aria-label="Dự án tiếp theo"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <section id="testimonials" class="content-section" aria-labelledby="testimonials-heading" data-animation="fadeInUp">
+                <h2 id="testimonials-heading">Khách hàng & Mọi người nói gì 💬</h2>
+                <div class="testimonials-carousel-wrapper">
+                    <div class="testimonials-grid">
+                        <article class="testimonial-item">
+                            <img src="assets/sunidea.jpg" alt="Ảnh đại diện của Sun Idea" class="testimonial-avatar" loading="lazy">
+                            <div class="testimonial-content">
+                                <blockquote>
+                                    <p>"Dịch vụ ở Light Store rất nhanh và uy tín. Mình mua Google One được hỗ trợ nhiệt tình, giá lại tốt nữa."</p>
+                                </blockquote>
+                                <cite>
+                                    <strong>Sun Idea</strong><br>
+                                    <span>Khách hàng Light Store</span>
+                                </cite>
+                                <div class="testimonial-rating"> <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="testimonial-item">
+                            <img src="assets/vutran.jpg" alt="Ảnh đại diện của Vu Tran" class="testimonial-avatar" loading="lazy">
+                            <div class="testimonial-content">
+                                <blockquote>
+                                    <p>"Thiết kế website rất đẹp, nếu có dịp mình xin ủng hộ tiếp!"</p>
+                                </blockquote>
+                                <cite>
+                                    <strong>Vu Tran</strong><br>
+                                    <span>Khách hàng Thiết kế Web</span>
+                                </cite>
+                                 <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </article>
+                         <article class="testimonial-item">
+                            <img src="assets/avatar-placeholder.png" alt="Ảnh đại diện của Khách hàng C" class="testimonial-avatar" loading="lazy"> <div class="testimonial-content">
+                                <blockquote>
+                                    <p>"Hỗ trợ rất nhiệt tình và nhanh chóng. Mình rất hài lòng với sản phẩm nhận được!"</p>
+                                </blockquote>
+                                <cite>
+                                    <strong>Khách hàng C</strong><br>
+                                    <span>Người dùng Dịch vụ</span>
+                                </cite>
+                                 <div class="testimonial-rating">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <button class="carousel-control prev testimonials-prev" aria-label="Đánh giá trước"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-control next testimonials-next" aria-label="Đánh giá tiếp theo"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <section id="payment" class="content-section" aria-labelledby="payment-heading" data-animation="slideInLeft">
+                <h2 id="payment-heading">Thông tin thanh toán</h2>
+                <div class="payment-grid">
+                    <div class="payment-item">
+                        <div class="payment-item-header">
+                            <img src="assets/momo.png" alt="Logo Momo" class="payment-logo" loading="lazy"> <span class="payment-label">Nguyễn Thị Hiệp</span>
+                        </div>
+                        <div class="payment-value-container">
+                            <span class="payment-value" id="momo-account">0795483703</span>
+                        </div>
+                        <span class="payment-provider">Momo</span>
+                        </div>
+                    <div class="payment-item">
+                        <div class="payment-item-header">
+                            <img src="assets/mbbank-logo.png" alt="Logo MB Bank" class="payment-logo" loading="lazy">
+                            <span class="payment-label">Hoàng Cao Thống</span>
+                        </div>
+                         <div class="payment-value-container">
+                            <span class="payment-value" id="mbbank-account">0794243312</span>
+                        </div>
+                        <span class="payment-provider">MB Bank</span>
+                        </div>
+                    <div class="payment-item">
+                        <div class="payment-item-header">
+                            <img src="assets/bitcoin.png" alt="Logo Bitcoin" class="payment-logo" loading="lazy">
+                            <span class="payment-label">Bitcoin</span>
+                        </div>
+                        <div class="payment-value-container">
+                            <span class="payment-value" id="btc-address">None</span>
+                        </div>
+                        <span class="payment-provider">BTC</span>
+                        </div>
+                    <div class="payment-item">
+                        <div class="payment-item-header">
+                            <img src="assets/tether.png" alt="Logo USDT (TRC20)" class="payment-logo" loading="lazy">
+                            <span class="payment-label">USDT (TRC20)</span>
+                        </div>
+                        <div class="payment-value-container">
+                            <span class="payment-value" id="usdt-address">none</span> 
+                        </div>
+                        <span class="payment-provider">Tether</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contact" class="content-section" aria-labelledby="contact-heading" data-animation="zoomIn">
+                <h2 id="contact-heading">Kết nối với tôi</h2>
+                <p class="text-secondary mb-3">Bạn có thể liên hệ hoặc theo dõi tôi qua các kênh dưới đây. Tôi luôn sẵn sàng lắng nghe!</p>
+                <div class="contact-methods">
+                    <div class="contact-links-wrapper">
+                        <h3 class="contact-subtitle">Mạng xã hội & Cộng đồng</h3>
+                        <div class="contact-links-grid">
+                            <a href="https://www.facebook.com/caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer">
+                                <img src="assets/icons/facebook.png" alt="Biểu tượng Facebook" class="icon custom-facebook-icon">
+                                <span>Facebook</span>
+                            </a>
+                            <a href="https://zalo.me/0794243312" class="contact-link-item" target="_blank" rel="noopener noreferrer">
+                                <img src="assets/icons/zalo.png" alt="Biểu tượng Zalo" class="icon custom-zalo-icon">
+                                <span>Zalo <span class="contact-online-indicator zalo-status"></span></span>
+                            </a>
+                            <a href="https://t.me/lightshopvn" class="contact-link-item" target="_blank" rel="noopener noreferrer">
+                                <img src="assets/icons/telegram.webp" alt="Biểu tượng Telegram" class="icon custom-telegram-icon">
+                                <span>Telegram <span class="contact-online-indicator telegram-status"></span></span>
+                            </a>
+                            <a href="https://www.youtube.com/@caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer">
+                                <img src="assets/icons/youtube.webp" alt="Biểu tượng YouTube" class="icon custom-youtube-icon">
+                                <span>YouTube</span>
+                            </a>
+                            <a href="https://www.tiktok.com/@caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer">
+                                <img src="assets/icons/tiktok.webp" alt="Biểu tượng TikTok" class="icon custom-tiktok-icon">
+                                <span>TikTok</span>
+                            </a>
+                            <a href="URL_DISCORD_SERVER_CUA_BAN" class="contact-link-item" target="_blank" rel="noopener noreferrer">
+                                <img src="assets/icons/discord.png" alt="Biểu tượng Discord" class="icon custom-discord-icon">
+                                <span>Discord</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="contact-form-wrapper">
+                        <h3 class="contact-subtitle">Gửi lời nhắn trực tiếp</h3>
+                        <form id="contact-form" action="YOUR_FORM_ENDPOINT" method="POST"> <div class="form-group">
+                                <label for="name">Tên của bạn:</label>
+                                <input type="text" id="name" name="name" required placeholder="Nhập tên của bạn">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" id="email" name="email" required placeholder="Nhập địa chỉ email">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Lời nhắn:</label>
+                                <textarea id="message" name="message" rows="5" required placeholder="Nội dung lời nhắn..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i>&nbsp;Gửi Lời Nhắn</button>
+                            <p class="form-status-message"></p>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <section id="skills" class="content-section" aria-labelledby="skills-heading" data-animation="slideInUp">
+                <h2 id="skills-heading">Kỹ năng & Công nghệ</h2>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h3><i class="fas fa-palette skill-category-icon"></i> UI/UX Design</h3>
+                        <ul class="skill-tags">
+                            <li>Figma <div class="skill-level" data-level="90"><div class="skill-progress"></div></div></li>
+                            <li>System Making <div class="skill-level" data-level="75"><div class="skill-progress"></div></div></li>
+                        </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h3><i class="fas fa-code skill-category-icon"></i> Web Development</h3>
+                            <ul class="skill-tags">
+                                <li>Node.js <div class="skill-level" data-level="70"><div class="skill-progress"></div></div></li>
+                                <li>TypeScript <div class="skill-level" data-level="85"><div class="skill-progress"></div></div></li>
+                                <li>JavaScript <div class="skill-level" data-level="85"><div class="skill-progress"></div></div></li>
+                                <li>CSS3 <div class="skill-level" data-level="90"><div class="skill-progress"></div></div></li>
+                                <li>HTML5 <div class="skill-level" data-level="95"><div class="skill-progress"></div></div></li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h3><i class="fas fa-laptop-code skill-category-icon"></i> Programming Languages</h3>
+                            <ul class="skill-tags">
+                                <li>Python <div class="skill-level" data-level="88"><div class="skill-progress"></div></div></li>
+                                <li>C/C++ <div class="skill-level" data-level="60"><div class="skill-progress"></div></div></li>
+                                <li>SQL (MySQL) <div class="skill-level" data-level="70"><div class="skill-progress"></div></div></li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h3><i class="fas fa-tools skill-category-icon"></i> Tools & Platforms</h3>
+                            <ul class="skill-tags">
+                                <li>VSCode</li>
+                                <li>Git & GitHub</li>
+                                <li>Linux</li>
+                                <li>Docker</li>
+                            </ul>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="page-footer">
+                <div class="footer-content">
+                    <div class="footer-quote">
+                        <span class="status-indicator footer-online-indicator" aria-label="Trạng thái Online" title="Online"></span>
+                        <p id="footer-dynamic-quote">Cuộc sống là hành trình bất ngờ...</p>
+                    </div>
+                    <div class="footer-copyright">
+                        &copy; <span id="current-year"></span> Hoàng Cao Thống (caothongdev). All Rights Reserved.
+                    </div>
+                </div>
+                <div class="footer-actions">
+                    <a href="https://github.com/caothongdev" target="_blank" rel="noopener noreferrer" class="btn btn-small btn-secondary">
+                        <i class="fab fa-github icon"></i> Github
+                    </a>
+                    <button id="theme-toggle-btn" class="btn btn-small btn-secondary" aria-label="Chuyển đổi giao diện Sáng/Tối" aria-pressed="false">
+                        <svg class="icon theme-icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 2.25a.75.75 0 01.75.75v2.25a.75.75 0 01-1.5 0V3a.75.75 0 01.75-.75zM7.5 12a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM18.894 6.166a.75.75 0 00-1.06-1.06l-1.591 1.59a.75.75 0 101.06 1.061l1.591-1.59zM21.75 12a.75.75 0 01-.75.75h-2.25a.75.75 0 010-1.5H21a.75.75 0 01.75.75zM17.834 18.894a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 10-1.061 1.06l1.59 1.591zM12 18a.75.75 0 01.75.75V21a.75.75 0 01-1.5 0v-2.25A.75.75 0 0112 18zM7.758 17.303a.75.75 0 00-1.061-1.06l-1.591 1.59a.75.75 0 001.06 1.061l1.591-1.59zM6 12a.75.75 0 01-.75.75H3a.75.75 0 010-1.5h2.25A.75.75 0 016 12zM6.166 7.758a.75.75 0 001.06-1.06l-1.59-1.591a.75.75 0 00-1.061 1.06l1.59 1.591z"></path></svg>
+                        <svg class="icon theme-icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="16" height="16" style="display: none;"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 01.162.819A8.97 8.97 0 009 6a9 9 0 009 9 8.97 8.97 0 003.463-.69.75.75 0 01.981.98 10.503 10.503 0 01-9.694 6.46c-5.799 0-10.5-4.701-10.5-10.5 0-3.51 1.713-6.622 4.43-8.463a.75.75 0 01.819.162z" clip-rule="evenodd"></path></svg>
+                    </button>
+                </div>
+                 <button id="scroll-to-top-btn" class="btn btn-secondary btn-small" title="Lên đầu trang"><i class="fas fa-arrow-up"></i></button>
+            </footer>
+        </div>
+    </main>
+
+    <div id="music-prompt-overlay" class="prompt-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="music-prompt-title" aria-describedby="music-prompt-desc">
+        <div id="music-prompt-box" class="prompt-box">
+            <p id="music-prompt-title">Bạn có muốn bật nhạc nền không?</p>
+            <div class="prompt-actions-wrapper" id="music-prompt-desc">
+                <div class="prompt-buttons">
+                    <button id="play-music-yes" class="btn btn-primary btn-small">Có</button>
+                    <button id="play-music-no" class="btn btn-secondary btn-small">Không</button>
+                </div>
+                <div class="prompt-checkbox-area">
+                    <input type="checkbox" id="music-dont-show-again">
+                    <label for="music-dont-show-again">Không hiển thị lại trong 12 giờ</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="lightbox-overlay" class="lightbox-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="lightbox-image-alt">
+        <span id="lightbox-close" class="lightbox-close" aria-label="Đóng ảnh phóng to" tabindex="0">×</span>
+        <img id="lightbox-image" src="" alt="" aria-live="polite">
+        <span id="lightbox-image-alt" class="visually-hidden">Ảnh được phóng to</span>
+    </div>
+
+    <div id="bio-details-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="bio-modal-title">
+        <div class="modal-content bio-modal-content">
+            <h3 id="bio-modal-title">Thông tin chi tiết về Hoàng Cao Thống</h3>
+            <div id="bio-modal-body">
+                </div>
+            <button id="close-bio-modal" class="btn btn-secondary btn-small mt-3">Đóng</button>
+        </div>
+    </div>
+
+    <div id="toast-container" aria-live="assertive" aria-atomic="true"></div>
+
+    <div id="controls-container">
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2" class="hidden" aria-label="Điều chỉnh âm lượng">
+        <button id="volume-btn" aria-label="Tắt hoặc bật tiếng và điều chỉnh âm lượng">
+             </button>
+        <div id="clock" aria-label="Thời gian hiện tại" role="timer">00:00:00</div>
+    </div>
+    <script src="js/script.js" defer></script>
+</body>
+</html>
