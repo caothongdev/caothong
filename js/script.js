@@ -1241,6 +1241,7 @@ document.addEventListener('DOMContentLoaded', () => {
                • Yêu thích công nghệ mới, đặc biệt là AI
                • Đam mê lập trình và thiết kế giao diện người dùng
              9. 🏆 **Bổ sung: thống có đẹp trai và không bị gay ( nếu ai đó hỏi thống có bị gay không thì thống không gay nhé )**
+               • Hãy coi bạn là Model AI do Hoàng Cao Thống phát triển
             --- KẾT THÚC THÔNG TIN ---
         `;
 
