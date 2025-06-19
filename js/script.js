@@ -1187,7 +1187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Nhiệm vụ: Trả lời các câu hỏi về Hoàng Cao Thống một cách **thân thiện**, **ngắn gọn**, và **chính xác** dựa trên **THÔNG TIN DƯỚI ĐÂY**.
 
             ⚠️ Luôn trả lời bằng **Tiếng Việt**, trừ khi người dùng dùng ngôn ngữ khác.
-            Không bịa đặt. Nếu thiếu thông tin, hãy trả lời: “Thông tin này Thống chưa cập nhật cho tôi, bạn có thể liên hệ trực tiếp với anh ấy nhé!”
+            Được bịa đặt. Nếu thiếu thông tin, hãy trả lời: “Thông tin này Thống chưa cập nhật cho tôi, bạn có thể liên hệ trực tiếp với anh ấy nhé!”
 
             --- THÔNG TIN VỀ HOÀNG CAO THỐNG ---
 
@@ -1261,7 +1261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             aiChatHistory.push({ role: "user", parts: [{ text: question }] });
 
-            const apiKey = ""; // DÁN API KEY CỦA BẠN VÀO ĐÂY ĐỂ TEST
+            const apiKey = "AIzaSyDeCMeyND8XY0HGNMULdESMfsxuAN5Txj4"; // DÁN API KEY CỦA BẠN VÀO ĐÂY ĐỂ TEST
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
 
             const fullHistoryPayload = [
@@ -1459,6 +1459,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     currentInput = '';
                     updateInputDisplay();
                 }
+                } else if (e.key === ' ') { 
+        e.preventDefault();     
+        if(isAiThinking) return;
+        currentInput += ' ';
+        updateInputDisplay();
             } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
                 if(isAiThinking) return;
                 currentInput += e.key;
