@@ -1,6 +1,22 @@
 // Sử dụng strict mode ngay từ đầu
 'use strict';
-let djProgress = 0;
+
+/**
+ * Định dạng phản hồi từ AI, chuyển đổi Markdown cơ bản sang HTML.
+ * @param {string} text - Văn bản thô từ AI.
+ * @returns {string} - Chuỗi HTML đã được định dạng.
+ */
+function formatAIResponse(text) {
+    // Thay thế **text** bằng <strong>text</strong>
+    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    // Thay thế * item bằng <li> item, xử lý các dòng liền kề
+    text = text.replace(/^\s*\*\s(.*?)$/gm, '<li>$1</li>');
+    text = text.replace(/(<li>.*<\/li>)/g, '<ul>$1</ul>');
+    text = text.replace(/<\/ul>\s*<ul>/g, '');
+    // Thay thế xuống dòng bằng <br>
+    return text.trim().replace(/\n/g, '<br>');
+}
+
 // --- Danh sách Slogan/Thơ & Hàm tiện ích ---
 const slogans = [
     "Nơi bắt đầu của những ý tưởng tuyệt vời.",
@@ -32,12 +48,6 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// --- Hàm tiện ích ---
-function getRandomItem(arr) {
-    if (!arr || arr.length === 0) return "";
-    return arr[Math.floor(Math.random() * arr.length)];
-}
-
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Lấy các phần tử DOM ---
@@ -52,58 +62,54 @@ document.addEventListener('DOMContentLoaded', () => {
     const playMusicYesBtn = document.getElementById('play-music-yes');
     const playMusicNoBtn = document.getElementById('play-music-no');
     const musicDontShowAgainCheckbox = document.getElementById('music-dont-show-again');
-
-    const bioLearnMoreBtn = document.getElementById('bio-learn-more-btn');
     const bioDetailsModal = document.getElementById('bio-details-modal');
     const bioModalBody = document.getElementById('bio-modal-body');
     const closeBioModalBtn = document.getElementById('close-bio-modal');
-    const bioExtendedContent = document.getElementById('bio-extended-content');
-
     const imagesForLightbox = document.querySelectorAll('.lightbox-trigger');
     const lightboxOverlay = document.getElementById('lightbox-overlay');
     const lightboxImage = document.getElementById('lightbox-image');
     const lightboxClose = document.getElementById('lightbox-close');
     const lightboxCaptionElement = document.getElementById('lightbox-image-alt');
-
     const musicSelectorIcon = document.getElementById('music-selector-icon');
     const songSelectionModal = document.getElementById('song-selection-modal');
     const songList = document.getElementById('song-list');
     const closeModalSongBtn = document.getElementById('close-modal-song');
     const loadingBar = document.querySelector('#loading-screen .loading-bar');
-
     const currentSongDisplay = document.getElementById('current-song-display');
     const currentSongTitleElement = document.getElementById('current-song-title');
-    // --- [NÂNG CẤP UX] --- Lấy element chỉ báo loading nhạc
     const songLoadingIndicator = currentSongDisplay?.querySelector('.song-loading-indicator');
-
     const themeToggleButton = document.getElementById('theme-toggle-btn');
     const htmlElement = document.documentElement;
     const sunIcon = themeToggleButton?.querySelector('.theme-icon-sun');
     const moonIcon = themeToggleButton?.querySelector('.theme-icon-moon');
     const faviconLink = document.getElementById('favicon');
     const themeColorMeta = document.getElementById('theme-color-meta');
-
     const toastContainer = document.getElementById('toast-container');
     const scrollToTopBtn = document.getElementById('scroll-to-top-btn');
-
-    // --- [NÂNG CẤP UX] --- Lấy các element của con trỏ chuột
     const customCursorElement = document.getElementById('custom-cursor-element');
     const cursorTrailElement = document.getElementById('cursor-trail');
     const cursorToggleButton = document.getElementById('cursor-toggle-btn');
     const cursorIconOn = cursorToggleButton?.querySelector('.cursor-icon-on');
     const cursorIconOff = cursorToggleButton?.querySelector('.cursor-icon-off');
-
-    // Typing effect targets
     const typingEffectTargets = document.querySelectorAll('.typing-effect-target');
-
-    // Online status indicator
     const onlineStatusIndicator = document.querySelector('.online-status-indicator');
     const footerOnlineIndicator = document.querySelector('.footer-online-indicator');
-
-    // Footer dynamic quote
     const footerDynamicQuote = document.getElementById('footer-dynamic-quote');
     const currentYearSpan = document.getElementById('current-year');
-
+    const mainNav = document.querySelector('.main-nav');
+    const navMobileToggle = document.querySelector('.nav-mobile-toggle');
+    const navLinksContainer = document.querySelector('.nav-links');
+    const allNavLinks = document.querySelectorAll('.nav-link');
+    const commandPaletteToggle = document.getElementById('command-palette-toggle');
+    const commandPaletteOverlay = document.getElementById('command-palette-overlay');
+    const commandPaletteInput = document.getElementById('command-palette-input');
+    const commandPaletteResults = document.getElementById('command-palette-results');
+    const matrixCanvas = document.getElementById('matrix-canvas');
+    const profileAvatarContainer = document.querySelector('.profile-avatar-container');
+    const achievementContainer = document.getElementById('achievement-container');
+    const terminalBody = document.getElementById('terminal-body');
+    const terminalWindow = document.getElementById('terminal');
+    const sections = document.querySelectorAll('.content-section');
 
     // --- Hằng số ---
     const HIDE_PROMPT_DURATION = 12 * 60 * 60 * 1000; // 12 tiếng
@@ -114,7 +120,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const SONG_LOAD_TIMEOUT = 10000; // 10 giây
 
     // --- Biến trạng thái ---
-    let animationFrameIdCursor = null; // ID cho requestAnimationFrame của con trỏ
+    let animationFrameIdCursor = null;
+    let lobbyScreenClicked = false;
+    let djProgress = 0;
 
     // --- Kiểm tra DOM cơ bản ---
     if (!loadingScreen || !lobbyScreen || !mainContent) {
@@ -122,8 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (!audioPlayer) console.warn("Cảnh báo: Không tìm thấy audioPlayer.");
 
-
     // --- Hiệu ứng Typing ---
+    let typeWriterTimeoutId = null;
+
     function typeWriter(element, text, speed = 70, callback, clearPrevious = true) {
         if (!element || typeof text !== 'string') {
             if (callback) callback();
@@ -132,17 +141,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (clearPrevious) element.textContent = '';
         let i = 0;
 
+        if (typeWriterTimeoutId) {
+            clearTimeout(typeWriterTimeoutId);
+            typeWriterTimeoutId = null;
+        }
+
         function type() {
             if (i < text.length) {
                 element.textContent += text.charAt(i);
                 i++;
-                setTimeout(type, speed);
+                typeWriterTimeoutId = setTimeout(type, speed);
             } else {
+                typeWriterTimeoutId = null;
                 if (callback) callback();
             }
         }
         type();
     }
+
 
     function applyTypingEffectToElements() {
         typingEffectTargets.forEach((target, index) => {
@@ -176,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setOnlineStatus(true);
 
 
-    // --- [NÂNG CẤP UX] --- Logic bật/tắt hiệu ứng con trỏ chuột
+    // --- Logic bật/tắt hiệu ứng con trỏ chuột ---
     const enableCustomCursor = () => {
         if (!customCursorElement || !cursorTrailElement) return;
 
@@ -213,12 +229,10 @@ document.addEventListener('DOMContentLoaded', () => {
             animationFrameIdCursor = requestAnimationFrame(animateCustomCursor);
         };
 
-        // Bắt đầu animation nếu chưa chạy
         if (!animationFrameIdCursor) {
             animateCustomCursor();
         }
 
-        // Gán lại hàm để có thể xóa sau này
         window.handleCursorMouseMove = handleMouseMove;
     };
 
@@ -229,7 +243,6 @@ document.addEventListener('DOMContentLoaded', () => {
         customCursorElement.style.opacity = '0';
         cursorTrailElement.style.opacity = '0';
 
-        // Hủy animation frame và xóa event listener
         if (animationFrameIdCursor) {
             cancelAnimationFrame(animationFrameIdCursor);
             animationFrameIdCursor = null;
@@ -268,7 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Khởi tạo trạng thái con trỏ khi tải trang
     if (cursorToggleButton) {
         const cursorPreference = localStorage.getItem('cursorEffectEnabled');
         if (cursorPreference === 'false') {
@@ -289,7 +301,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Kích hoạt animation cho sections khi cuộn vào view ---
-    const sections = document.querySelectorAll('.content-section');
     if ("IntersectionObserver" in window && sections.length > 0) {
         const sectionObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -429,7 +440,6 @@ document.addEventListener('DOMContentLoaded', () => {
         volumeBtn.innerHTML = `<i class="${icon}"></i>`;
     };
 
-    // --- [NÂNG CẤP UX] --- Cập nhật hàm đổi bài hát với chỉ báo loading
     const changeAndPlaySong = (songSrc, songTitle) => {
         if (!audioPlayer || !songSrc) return;
         if (audioPlayer.src.endsWith(songSrc) && !audioPlayer.paused) {
@@ -438,18 +448,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         djProgress++;
         if (djProgress === 3) unlockAchievement('dj');
-        // Dừng bài hát hiện tại và hiển thị loading
         audioPlayer.pause();
         updateCurrentSongDisplay(songTitle, true);
 
-        // Hủy bỏ timeout cũ nếu có
         if (window.songLoadTimeoutId) {
             clearTimeout(window.songLoadTimeoutId);
         }
 
         const onCanPlayThrough = () => {
             clearTimeout(window.songLoadTimeoutId);
-            updateCurrentSongDisplay(songTitle, false); // Ẩn loading
+            updateCurrentSongDisplay(songTitle, false);
             audioPlayer.play().then(() => {
                 updateVolumeButton();
                 showToast(`Đang phát: ${songTitle}`, 'success');
@@ -463,7 +471,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error(`Lỗi phát nhạc ${songSrc}:`, error);
                 showToast(`Lỗi phát bài: ${songTitle}`, 'error');
             });
-            // Xóa listener để tránh bị gọi lại
             audioPlayer.removeEventListener('canplaythrough', onCanPlayThrough);
             audioPlayer.removeEventListener('error', onError);
         };
@@ -482,7 +489,6 @@ document.addEventListener('DOMContentLoaded', () => {
         audioPlayer.src = songSrc;
         audioPlayer.load();
 
-        // Fallback: nếu bài hát không tải được sau X giây
         window.songLoadTimeoutId = setTimeout(() => {
             onError();
         }, SONG_LOAD_TIMEOUT);
@@ -593,8 +599,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         document.body.classList.add('no-scroll');
 
+        let called = false;
         const handleTransitionEnd = (event) => {
             if (event.target !== currentScreen || event.propertyName !== 'opacity') return;
+            if (called) return;
+            called = true;
 
             currentScreen.classList.remove('active', 'fade-out');
             currentScreen.classList.add('hidden');
@@ -607,18 +616,40 @@ document.addEventListener('DOMContentLoaded', () => {
             currentScreen.removeEventListener('transitionend', handleTransitionEnd);
             document.body.classList.remove('no-scroll');
         };
+        // Fallback nếu transition không chạy
+        const fallbackTimeout = setTimeout(() => {
+            if (called) return;
+            called = true;
+
+            currentScreen.classList.remove('active', 'fade-out');
+            currentScreen.classList.add('hidden');
+
+            nextScreen.classList.remove('hidden');
+            nextScreen.classList.add('active');
+
+            if (typeof callbackOnNextScreenActive === 'function') callbackOnNextScreenActive();
+
+            currentScreen.removeEventListener('transitionend', handleTransitionEnd);
+            document.body.classList.remove('no-scroll');
+        }, 700); // 700ms = thời gian transition CSS
+
         currentScreen.addEventListener('transitionend', handleTransitionEnd);
         currentScreen.classList.add('fade-out');
     }
 
-
     // --- Bio Details Modal Logic ---
     const openBioModal = () => {
-        if (!bioDetailsModal || !bioModalBody || !bioExtendedContent) {
+        const bioContent = `
+            <p><strong>Tên đầy đủ:</strong> Hoàng Cao Thống (caothongdev)</p>
+            <p><strong>Vị trí:</strong> Developer & Designer</p>
+            <p><strong>Slogan:</strong> "Developer | Designer | Dream Chaser"</p>
+            <p><strong>Giới thiệu:</strong> Tôi là một lập trình viên và nhà thiết kế với niềm đam mê tạo ra những sản phẩm kỹ thuật số đẹp mắt, hữu ích và mang lại trải nghiệm tuyệt vời cho người dùng. Tôi luôn tìm kiếm cơ hội để học hỏi công nghệ mới và áp dụng chúng vào các dự án thực tế.</p>
+        `;
+        if (!bioDetailsModal || !bioModalBody) {
             console.warn("Các phần tử của Bio Modal không đầy đủ.");
             return;
         }
-        bioModalBody.innerHTML = bioExtendedContent.innerHTML;
+        bioModalBody.innerHTML = bioContent;
         bioDetailsModal.classList.remove('hidden');
         requestAnimationFrame(() => bioDetailsModal.classList.add('active'));
         document.body.style.overflow = 'hidden';
@@ -634,7 +665,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 300);
     };
-
 
     // --- Carousels ---
     function initializeCarousel(carouselId, itemSelector, prevBtnSelector, nextBtnSelector) {
@@ -694,8 +724,8 @@ document.addEventListener('DOMContentLoaded', () => {
         showSlide(0);
     }
 
-    initializeCarousel('#featured-links .projects-carousel-wrapper', '.project-item', '.carousel-control.prev', '.carousel-control.next');
-    initializeCarousel('#testimonials .testimonials-carousel-wrapper', '.testimonial-item', '.carousel-control.testimonials-prev', '.carousel-control.testimonials-next');
+    initializeCarousel('#featured-projects', '.project-item', '.prev', '.next');
+    initializeCarousel('#testimonials', '.testimonial-item', '.testimonials-prev', '.testimonials-next');
 
 
     // --- Payment Section: Copy to Clipboard ---
@@ -722,30 +752,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     // --- Contact Form ---
     const contactForm = document.getElementById('contact-form');
     const formStatusMessage = contactForm?.querySelector('.form-status-message');
 
-    if (contactForm && formStatusMessage) {
-        contactForm.addEventListener('submit', function (event) {
+    if (contactForm) {
+        contactForm.addEventListener("submit", async function(event) {
             event.preventDefault();
-            formStatusMessage.textContent = 'Đang gửi...';
-            formStatusMessage.className = 'form-status-message sending';
-            setTimeout(() => {
-                const success = Math.random() > 0.3;
-                if (success) {
-                    showToast('Lời nhắn của bạn đã được gửi!', 'success');
-                    formStatusMessage.textContent = 'Gửi thành công!';
-                    formStatusMessage.className = 'form-status-message success';
-                    contactForm.reset();
+            const form = event.target;
+            const data = new FormData(form);
+            if (formStatusMessage) {
+                formStatusMessage.textContent = 'Đang gửi...';
+                formStatusMessage.className = 'form-status-message sending';
+            }
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (response.ok) {
+                    if (formStatusMessage) {
+                        formStatusMessage.textContent = "Gửi thành công!";
+                        formStatusMessage.classList.add('success');
+                    }
+                    showToast('Cảm ơn lời nhắn của bạn!', 'success');
+                    form.reset();
                 } else {
-                    showToast('Gửi lời nhắn thất bại. Vui lòng thử lại.', 'error');
-                    formStatusMessage.textContent = 'Gửi thất bại. Vui lòng thử lại.';
-                    formStatusMessage.className = 'form-status-message error';
+                    const responseData = await response.json();
+                    if (Object.hasOwn(responseData, 'errors')) {
+                        const errorMsg = responseData["errors"].map(error => error["message"]).join(", ");
+                        throw new Error(errorMsg);
+                    } else {
+                        throw new Error('Lỗi không xác định từ server.');
+                    }
                 }
-                setTimeout(() => formStatusMessage.textContent = '', 3000);
-            }, 1500);
+            } catch (error) {
+                if (formStatusMessage) {
+                    formStatusMessage.textContent = "Lỗi! Không thể gửi.";
+                    formStatusMessage.classList.add('error');
+                }
+                showToast(`Lỗi: ${error.message || 'Không thể gửi form'}`, 'error');
+            } finally {
+                if (formStatusMessage) {
+                    setTimeout(() => { formStatusMessage.textContent = ''; formStatusMessage.className = 'form-status-message'; }, 5000);
+                }
+            }
         });
     }
 
@@ -784,10 +836,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (theme === 'light') {
                 faviconLink.href = 'assets/favicon-light.png';
-                themeColorMeta.content = getComputedStyle(htmlElement).getPropertyValue('--color-bg-light-1').trim();
+                themeColorMeta.content = '#F0F2F5'; // Hardcoded light theme color
             } else {
                 faviconLink.href = 'assets/favicon-dark.png';
-                themeColorMeta.content = getComputedStyle(htmlElement).getPropertyValue('--color-bg-dark-1').trim();
+                themeColorMeta.content = '#0D1117'; // Hardcoded dark theme color
             }
 
             if (!initialLoad) {
@@ -823,10 +875,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const emojis = ["💖", "🎉", "✨", "🚀", "🎂", "😙", "🌟", "🎈", "🌸", "💯", "👍", "🔥"];
 
     function createClickEmoji(event) {
-        if (document.body.classList.contains('cursor-effect-disabled')) return; // Không tạo emoji nếu hiệu ứng bị tắt
+        if (document.body.classList.contains('cursor-effect-disabled')) return;
 
         const interactiveElements = ['BUTTON', 'A', 'INPUT', 'TEXTAREA', 'SELECT', 'LABEL', '.btn-copy-account', '#volume-slider'];
-        if (interactiveElements.includes(event.target.tagName) || event.target.closest(interactiveElements.join(', '))) {
+        if (interactiveElements.some(selector => event.target.closest(selector))) {
             return;
         }
         if (event.target.closest('#controls-container, .modal-overlay, .prompt-overlay, .lightbox-overlay, .carousel-control')) return;
@@ -867,21 +919,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-
-    // [NÂNG CẤP] Lấy các phần tử cho Navigation và Command Palette
-    const mainNav = document.querySelector('.main-nav');
-    const navMobileToggle = document.querySelector('.nav-mobile-toggle');
-    const navLinksContainer = document.querySelector('.nav-links');
-    const allNavLinks = document.querySelectorAll('.nav-link');
-    const commandPaletteToggle = document.getElementById('command-palette-toggle');
-    const commandPaletteOverlay = document.getElementById('command-palette-overlay');
-    const commandPaletteInput = document.getElementById('command-palette-input');
-    const commandPaletteResults = document.getElementById('command-palette-results');
-    // [EASTER EGG] Lấy các phần tử cho Easter Eggs
-    const matrixCanvas = document.getElementById('matrix-canvas');
-    const profileAvatarContainer = document.querySelector('.profile-avatar-container');
-    // --- [NÂNG CẤP] HỆ THỐNG THÀNH TỰU (ACHIEVEMENT SYSTEM) ---
-    const achievementContainer = document.getElementById('achievement-container');
+    // --- Hệ thống thành tựu (ACHIEVEMENT SYSTEM) ---
     const ACHIEVEMENTS = {
         firstVisit: { title: "Người Mới Đến", desc: "Chào mừng bạn lần đầu ghé thăm!", icon: "fas fa-door-open" },
         explorer: { title: "Nhà Thám Hiểm", desc: "Cuộn xuống cuối trang khám phá.", icon: "fas fa-compass" },
@@ -912,11 +950,12 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('unlockedAchievements', JSON.stringify(unlockedAchievements));
         }
     }
-    let lastScrollTop = 0;
+    window.addEventListener('unlockAchievement', (e) => unlockAchievement(e.detail));
 
-    // --- [NÂNG CẤP] Logic cho Thanh điều hướng (Navigation) ---
+
+    // --- Logic cho Thanh điều hướng (Navigation) ---
     if (mainNav) {
-        // Ẩn/hiện khi cuộn
+        let lastScrollTop = 0;
         window.addEventListener('scroll', () => {
             let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             if (scrollTop > lastScrollTop && scrollTop > mainNav.offsetHeight) {
@@ -925,92 +964,58 @@ document.addEventListener('DOMContentLoaded', () => {
                 mainNav.classList.remove('nav-hidden');
             }
             lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                unlockAchievement('explorer');
+            }
         }, { passive: true });
 
-        // Menu trên di động
         if (navMobileToggle && navLinksContainer) {
             navMobileToggle.addEventListener('click', () => {
-                navLinksContainer.classList.toggle('active');
-                navMobileToggle.querySelector('i').classList.toggle('fa-bars');
-                navMobileToggle.querySelector('i').classList.toggle('fa-times');
+                const isOpened = navLinksContainer.classList.toggle('active');
+                navMobileToggle.setAttribute('aria-expanded', isOpened);
+                navMobileToggle.querySelector('i').classList.toggle('fa-bars', !isOpened);
+                navMobileToggle.querySelector('i').classList.toggle('fa-times', isOpened);
             });
-            // Đóng menu khi click vào một link
             allNavLinks.forEach(link => {
                 link.addEventListener('click', () => {
                     navLinksContainer.classList.remove('active');
+                    navMobileToggle.setAttribute('aria-expanded', 'false');
                     navMobileToggle.querySelector('i').classList.add('fa-bars');
                     navMobileToggle.querySelector('i').classList.remove('fa-times');
                 });
             });
         }
 
-        // Đánh dấu link active khi cuộn
-        const sections = document.querySelectorAll('.content-section');
         const observerOptions = { root: null, rootMargin: "-50% 0px -50% 0px", threshold: 0 };
-        const sectionObserver = new IntersectionObserver((entries, observer) => {
+        const navSectionObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const id = entry.target.getAttribute('id');
                     document.querySelector('.nav-link.active')?.classList.remove('active');
-                    document.querySelector(`.nav-link[href="#${id}"]`)?.classList.add('active');
+                    const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
+                    activeLink?.classList.add('active');
                 }
             });
         }, observerOptions);
-        sections.forEach(section => sectionObserver.observe(section));
+        sections.forEach(section => navSectionObserver.observe(section));
     }
 
-    // --- [NÂNG CẤP] Logic cho Form Liên hệ ---
-    if (contactForm) {
-        contactForm.addEventListener("submit", async function (event) {
-            event.preventDefault();
-            const form = event.target;
-            const data = new FormData(form);
-            formStatusMessage.textContent = 'Đang gửi...';
-            formStatusMessage.className = 'form-status-message sending';
-            try {
-                const response = await fetch(form.action, {
-                    method: form.method,
-                    body: data,
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (response.ok) {
-                    formStatusMessage.textContent = "Gửi thành công!";
-                    formStatusMessage.classList.add('success');
-                    showToast('Cảm ơn lời nhắn của bạn!', 'success');
-                    form.reset();
-                } else {
-                    const responseData = await response.json();
-                    if (Object.hasOwn(responseData, 'errors')) {
-                        const errorMsg = responseData["errors"].map(error => error["message"]).join(", ");
-                        throw new Error(errorMsg);
-                    } else {
-                        throw new Error('Lỗi không xác định từ server.');
-                    }
-                }
-            } catch (error) {
-                formStatusMessage.textContent = "Lỗi! Không thể gửi.";
-                formStatusMessage.classList.add('error');
-                showToast(`Lỗi: ${error.message}`, 'error');
-            } finally {
-                setTimeout(() => { formStatusMessage.textContent = ''; formStatusMessage.className = 'form-status-message'; }, 5000);
-            }
-        });
-    }
-
-    // --- [NÂNG CẤP] Logic cho Command Palette ---
+    // --- Logic cho Command Palette ---
     const commands = [
         { name: 'Chuyển giao diện Sáng/Tối', type: 'Lệnh', action: () => themeToggleButton.click() },
         { name: 'Bật/Tắt hiệu ứng con trỏ', type: 'Lệnh', action: () => cursorToggleButton.click() },
         { name: 'Bật/Tắt nhạc nền', type: 'Lệnh', action: () => volumeBtn.click() },
-        { name: 'Đi đến mục Giới thiệu', type: 'Điều hướng', action: () => document.getElementById('bio')?.scrollIntoView() },
-        { name: 'Đi đến mục Kỹ năng', type: 'Điều hướng', action: () => document.getElementById('skills')?.scrollIntoView() },
-        { name: 'Đi đến mục Dự án', type: 'Điều hướng', action: () => document.getElementById('featured-links')?.scrollIntoView() },
-        { name: 'Đi đến mục Liên hệ', type: 'Điều hướng', action: () => document.getElementById('contact')?.scrollIntoView() },
+        { name: 'Đi đến mục Giới thiệu', type: 'Điều hướng', action: () => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }) },
+        { name: 'Đi đến mục Kỹ năng', type: 'Điều hướng', action: () => document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' }) },
+        { name: 'Đi đến mục Dự án', type: 'Điều hướng', action: () => document.getElementById('featured-projects')?.scrollIntoView({ behavior: 'smooth' }) },
+        { name: 'Đi đến mục Liên hệ', type: 'Điều hướng', action: () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) },
         { name: 'Mở trang GitHub', type: 'Liên kết', action: () => window.open('https://github.com/caothongdev', '_blank') },
         { name: 'Mở trang Facebook', type: 'Liên kết', action: () => window.open('https://facebook.com/caothongdev', '_blank') }
     ];
 
     function renderCommandResults(query = '') {
+        if (!commandPaletteResults) return;
         commandPaletteResults.innerHTML = '';
         const filteredCommands = commands.filter(cmd => cmd.name.toLowerCase().includes(query.toLowerCase()));
         filteredCommands.forEach((cmd, index) => {
@@ -1031,68 +1036,69 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function openCommandPalette() {
+        if (!commandPaletteOverlay) return;
         commandPaletteOverlay.classList.remove('hidden');
         requestAnimationFrame(() => {
             commandPaletteOverlay.classList.add('active');
-            commandPaletteInput.focus();
+            if (commandPaletteInput) commandPaletteInput.focus();
         });
         renderCommandResults();
     }
 
     function closeCommandPalette() {
+        if (!commandPaletteOverlay) return;
         commandPaletteOverlay.classList.remove('active');
-        commandPaletteInput.value = '';
+        if (commandPaletteInput) commandPaletteInput.value = '';
         setTimeout(() => commandPaletteOverlay.classList.add('hidden'), 300);
     }
 
     function handleCommandPaletteNav(e) {
-        const items = commandPaletteResults.querySelectorAll('li');
+        if (!commandPaletteResults) return;
+        const items = Array.from(commandPaletteResults.querySelectorAll('li'));
         if (items.length === 0) return;
-        let currentIndex = -1;
-        const currentSelected = commandPaletteResults.querySelector('li.selected');
-        if (currentSelected) {
-            currentIndex = parseInt(currentSelected.dataset.index);
-        }
+
+        let currentIndex = items.findIndex(item => item.classList.contains('selected'));
 
         if (e.key === 'ArrowDown') {
             e.preventDefault();
-            if (currentSelected) currentSelected.classList.remove('selected');
+            if (currentIndex !== -1) items[currentIndex].classList.remove('selected');
             const nextIndex = (currentIndex + 1) % items.length;
             items[nextIndex].classList.add('selected');
         } else if (e.key === 'ArrowUp') {
             e.preventDefault();
-            if (currentSelected) currentSelected.classList.remove('selected');
+            if (currentIndex !== -1) items[currentIndex].classList.remove('selected');
             const prevIndex = (currentIndex - 1 + items.length) % items.length;
             items[prevIndex].classList.add('selected');
         } else if (e.key === 'Enter') {
             e.preventDefault();
-            if (currentSelected) {
-                const commandIndex = parseInt(currentSelected.dataset.index);
+            if (currentIndex !== -1) {
                 const query = commandPaletteInput.value.toLowerCase();
                 const filteredCommands = commands.filter(cmd => cmd.name.toLowerCase().includes(query));
-                executeCommand(filteredCommands[commandIndex]);
+                const commandToExecute = filteredCommands[currentIndex];
+                if (commandToExecute) executeCommand(commandToExecute);
             }
         }
     }
 
     if (commandPaletteToggle) {
         commandPaletteToggle.addEventListener('click', openCommandPalette);
-        commandPaletteOverlay.addEventListener('click', (e) => { if (e.target === commandPaletteOverlay) closeCommandPalette() });
-        commandPaletteInput.addEventListener('input', () => renderCommandResults(commandPaletteInput.value));
-        commandPaletteInput.addEventListener('keydown', handleCommandPaletteNav);
+        if (commandPaletteOverlay) commandPaletteOverlay.addEventListener('click', (e) => { if (e.target === commandPaletteOverlay) closeCommandPalette() });
+        if (commandPaletteInput) {
+            commandPaletteInput.addEventListener('input', () => renderCommandResults(commandPaletteInput.value));
+            commandPaletteInput.addEventListener('keydown', handleCommandPaletteNav);
+        }
         window.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                 e.preventDefault();
                 openCommandPalette();
             }
-            if (e.key === 'Escape' && commandPaletteOverlay.classList.contains('active')) {
+            if (e.key === 'Escape' && commandPaletteOverlay?.classList.contains('active')) {
                 closeCommandPalette();
             }
         });
     }
 
-    // --- [EASTER EGG] Logic ---
-    // 1. Konami Code
+    // --- Easter Egg Logic ---
     const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
     let konamiIndex = 0;
     document.addEventListener('keydown', (e) => {
@@ -1123,7 +1129,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const fontSize = 16;
         const columns = matrixCanvas.width / fontSize;
-        const rainDrops = Array.from({ length: columns }).fill(1);
+        const rainDrops = Array.from({ length: Math.ceil(columns) }).fill(1);
 
         const draw = () => {
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
@@ -1141,19 +1147,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        const matrixInterval = setInterval(draw, 30);
+        const matrixInterval = setInterval(draw, 33);
 
-        // Dừng và ẩn đi sau 10 giây
         setTimeout(() => {
             clearInterval(matrixInterval);
             matrixCanvas.style.display = 'none';
         }, 15000);
     }
 
-    // 2. Avatar Click
     if (profileAvatarContainer) {
         profileAvatarContainer.addEventListener('click', () => {
-            let clicks = parseInt(profileAvatarContainer.dataset.clicks) + 1;
+            let clicks = parseInt(profileAvatarContainer.dataset.clicks || '0') + 1;
             profileAvatarContainer.dataset.clicks = clicks;
             if (clicks === 10) {
                 unlockAchievement('fan');
@@ -1166,6 +1170,300 @@ document.addEventListener('DOMContentLoaded', () => {
                 profileAvatarContainer.dataset.clicks = 0; // Reset
             }
         });
+    }
+
+    // ===================================================================
+    // LOGIC CHO TERMINAL TÍCH HỢP AI (PHẦN ĐÃ NÂNG CẤP)
+    // ===================================================================
+    if (terminalWindow && terminalBody) {
+        let currentInput = '';
+        let commandHistory = [];
+        let historyIndex = -1;
+        let isAiThinking = false;
+        let aiChatHistory = [];
+        
+        const personalContext = `
+            Bạn là ThongGPT – trợ lý AI cá nhân được tích hợp trong terminal của portfolio Hoàng Cao Thống (caothongdev).
+            Nhiệm vụ: Trả lời các câu hỏi về Hoàng Cao Thống một cách **thân thiện**, **ngắn gọn**, và **chính xác** dựa trên **THÔNG TIN DƯỚI ĐÂY**.
+
+            ⚠️ Luôn trả lời bằng **Tiếng Việt**, trừ khi người dùng dùng ngôn ngữ khác.
+            Được bịa đặt. Nếu thiếu thông tin, hãy trả lời: “Thông tin này Thống chưa cập nhật cho tôi, bạn có thể liên hệ trực tiếp với anh ấy nhé!”
+
+            --- THÔNG TIN VỀ HOÀNG CAO THỐNG ---
+
+            1. 🧑‍💻 **Thông tin cá nhân:**
+               • Tên đầy đủ: Hoàng Cao Thống
+               • Biệt danh: caothongdev
+               • Năm sinh: 2009 (16 tuổi)
+               • Chiều cao: 1m75 | Cân nặng: 56kg
+               • Nơi ở: Cần Thơ, Việt Nam
+               • Vai trò: Developer & Designer
+               • Slogan: "Developer | Designer | Dream Chaser"
+               • GitHub: https://github.com/caothongdev
+
+            2. 🛠️ **Kỹ năng chuyên môn:**
+               • **UI/UX:** Figma (thành thạo), System Making (tốt)
+               • **Web:** HTML5 & CSS3 (chuyên gia), JavaScript (rất giỏi), Node.js (giỏi), TypeScript (khá)
+               • **Lập trình:** Python (rất giỏi), SQL (khá), C/C++ (cơ bản)
+               • **Công cụ:** VSCode, Git/GitHub (chuyên gia), Linux (khá), Docker (cơ bản)
+
+            3. 🚀 **Dự án tiêu biểu:**
+               • **V Store:** Web bán tài khoản số – Lead Dev & UI/UX – Node.js, JavaScript, Figma
+               • **AI Discord Bot:** Bot AI quản lý server – AI Engineer & Backend – Python, TypeScript, Docker
+               • **Portfolio cá nhân:** Chính là trang web hiện tại – HTML, CSS, JavaScript thuần
+
+            4. 🎯 **Định hướng & mục tiêu:**
+               • Xây dựng thương hiệu cá nhân qua nội dung dạy lập trình Python, bot AI và tự động hóa
+               • Làm giàu từ lập trình, AI và hệ sinh thái sản phẩm số
+               • Phát triển các công cụ như SaaS, bot bán hàng, nền tảng thông báo đơn hàng
+               • Xây dựng kênh YouTube chia sẻ kiến thức lập trình dễ hiểu cho học sinh & người mới
+               • Ước mơ: Mua **Lamborghini** và **BMW**, định cư tại **Mỹ** để hiện thực hóa giấc mơ đó
+
+            5. 🎤 **Thiết bị & công cụ:**
+               • Micro sử dụng: MAONO DGM20 RGB USB
+               • Môi trường lập trình: Terminal, VSCode, GitHub
+               • Hệ sinh thái: Discord bot AI, Website bán hàng, Tool tự động hóa
+
+            6. 🧠 **Tư duy & học tập:**
+               • Ưu tiên học Tin học và Ngoại ngữ, chọn lọc Toán & Văn phù hợp với khởi nghiệp
+               • Định hướng học AI, automation, ethical hacking (hacker mũ trắng)
+               • Học tiếng Anh theo chủ đề Startup, Business, IT
+               • Đang luyện tư duy phản biện và học IELTS
+
+            7. 📬 **Liên hệ & Mạng xã hội:**
+               • Facebook: https://www.facebook.com/caothongdev
+               • YouTube: https://www.youtube.com/@caothongdev (tên kênh: caothongdev)
+               • Các nền tảng khác: Zalo, Telegram, TikTok, Discord (tìm với từ khóa: caothongdev)
+               • Hoặc liên hệ trực tiếp qua form trên trang web
+
+            --- KẾT THÚC THÔNG TIN ---
+        `;
+
+        function typeToTerminal(text, className = 'output') {
+            const line = document.createElement('div');
+            line.classList.add('terminal-line');
+            if (className) {
+                line.classList.add(className);
+            }
+            line.innerHTML = text;
+            terminalBody.appendChild(line);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+
+        async function getAiResponse(question) {
+            isAiThinking = true;
+            typeToTerminal('ThongGPT đang suy nghĩ...', 'ai-response');
+            
+            aiChatHistory.push({ role: "user", parts: [{ text: question }] });
+
+            const apiKey = "AIzaSyDeCMeyND8XY0HGNMULdESMfsxuAN5Txj4"; // DÁN API KEY CỦA BẠN VÀO ĐÂY ĐỂ TEST
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+
+            const fullHistoryPayload = [
+                { role: "user", parts: [{ text: personalContext }] },
+                { role: "model", parts: [{ text: "Đã hiểu. Tôi là ThongGPT. Tôi sẽ trả lời các câu hỏi về Hoàng Cao Thống dựa trên thông tin được cung cấp." }] },
+                ...aiChatHistory
+            ];
+
+            const payload = { contents: fullHistoryPayload };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const thinkingLine = terminalBody.querySelector('.terminal-line:last-child');
+                if (thinkingLine && thinkingLine.textContent.includes('suy nghĩ')) {
+                    terminalBody.removeChild(thinkingLine);
+                }
+
+                if (!response.ok) {
+                    aiChatHistory.pop();
+                    const errorData = await response.json().catch(() => ({ error: { message: "Không thể đọc phản hồi lỗi từ server." } }));
+                    console.error("API Error Response:", errorData);
+                    throw new Error(`API error ${response.status}: ${errorData.error?.message || response.statusText}`);
+                }
+
+                const result = await response.json();
+
+                if (result.candidates && result.candidates[0]?.content?.parts[0]) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    aiChatHistory.push({ role: "model", parts: [{ text: text }] });
+                    typeToTerminal(formatAIResponse(text), 'ai-response');
+                } else {
+                    aiChatHistory.pop(); 
+                    console.warn("API không trả về nội dung hợp lệ:", result);
+                    if (result.promptFeedback && result.promptFeedback.blockReason) {
+                        typeToTerminal(`Phản hồi đã bị chặn vì: ${result.promptFeedback.blockReason}. Vui lòng thử câu hỏi khác.`, 'error');
+                    } else {
+                        typeToTerminal("Rất tiếc, tôi không thể tạo phản hồi vào lúc này.", 'error');
+                    }
+                }
+            } catch (error) {
+                aiChatHistory.pop();
+                console.error("Lỗi khi gọi AI:", error);
+                const thinkingLine = terminalBody.querySelector('.terminal-line:last-child');
+                 if (thinkingLine && thinkingLine.textContent.includes('suy nghĩ')) {
+                    terminalBody.removeChild(thinkingLine);
+                }
+                typeToTerminal(`Đã có lỗi xảy ra khi kết nối: ${error.message}`, 'error');
+            } finally {
+                isAiThinking = false;
+            }
+        }
+        
+        async function handleTerminalInput(input) {
+            const trimmedInput = input.trim();
+            if (trimmedInput === '') {
+                return;
+            }
+
+            commandHistory.push(trimmedInput);
+            historyIndex = commandHistory.length;
+
+            typeToTerminal(`<span class="prompt-user">caothongdev@portfolio:~$</span> <span class="command-text">${input}</span>`);
+
+            if (isAiThinking) {
+                typeToTerminal('Vui lòng đợi ThongGPT trả lời xong...', 'error');
+                return;
+            }
+
+            const parts = trimmedInput.split(/\s+/);
+            const command = parts[0].toLowerCase();
+            const args = parts.slice(1);
+
+            switch (command) {
+                case 'ask':
+                    const question = args.join(' ');
+                    if (!question) {
+                        typeToTerminal("Bạn muốn hỏi gì nào? Gõ 'ask' theo sau là câu hỏi của bạn.", 'system');
+                        typeToTerminal("Ví dụ: ask bạn là ai?", 'system');
+                    } else {
+                        await getAiResponse(question);
+                    }
+                    break;
+
+                case 'help':
+                    typeToTerminal("Các lệnh có sẵn:", "output");
+                    typeToTerminal("&nbsp;&nbsp;<span class='command'>ask [câu hỏi]</span> - Hỏi ThongGPT, trợ lý AI của Thống.", "output");
+                    typeToTerminal("&nbsp;&nbsp;<span class='command'>bio</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Xem thông tin chi tiết về tôi.", "output");
+                    typeToTerminal("&nbsp;&nbsp;<span class='command'>skills</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Liệt kê các kỹ năng của tôi.", "output");
+                    typeToTerminal("&nbsp;&nbsp;<span class='command'>projects</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Xem các dự án nổi bật.", "output");
+                    typeToTerminal("&nbsp;&nbsp;<span class='command'>social</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Mở các trang mạng xã hội.", "output");
+                    typeToTerminal("&nbsp;&nbsp;<span class='command'>theme [dark|light]</span> - Đổi giao diện.", "output");
+                    typeToTerminal("&nbsp;&nbsp;<span class='command'>matrix</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Kích hoạt hiệu ứng ma trận.", "output");
+                    typeToTerminal("&nbsp;&nbsp;<span class='command'>clear</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Xóa màn hình và lịch sử chat.", "output");
+                    typeToTerminal("&nbsp;&nbsp;<span class='command'>reset-chat</span>&nbsp;&nbsp;&nbsp;- Chỉ xóa lịch sử chat AI.", "output");
+                    break;
+                
+                case 'bio':
+                    openBioModal();
+                    break;
+                
+                case 'social':
+                    window.open('https://github.com/caothongdev', '_blank');
+                    typeToTerminal("Đã mở GitHub trong tab mới...", "system");
+                    break;
+                
+                case 'clear':
+                    terminalBody.innerHTML = '';
+                    aiChatHistory = []; 
+                    await sleep(50);
+                    typeToTerminal('Terminal và lịch sử trò chuyện đã được dọn dẹp!', 'system');
+                    break;
+
+                case 'reset-chat':
+                    aiChatHistory = [];
+                    typeToTerminal("Lịch sử trò chuyện với AI đã được làm mới.", "system");
+                    break;
+
+                case 'matrix':
+                    startMatrix();
+                    break;
+
+                default:
+                    typeToTerminal(`Lệnh '${command}' không tồn tại. Gõ 'help' để xem danh sách lệnh.`, 'error');
+                    break;
+            }
+        }
+        
+        function updateInputDisplay() {
+            const inputSpan = terminalBody.querySelector('.terminal-input-line .input-text');
+            if (inputSpan) {
+                inputSpan.textContent = currentInput;
+            }
+        }
+
+        function createNewInputLine() {
+            const oldInputLine = terminalBody.querySelector('.terminal-input-line');
+            if (oldInputLine) {
+                oldInputLine.classList.remove('terminal-input-line');
+                const caret = oldInputLine.querySelector('.caret');
+                if (caret) caret.remove();
+            }
+
+            const line = document.createElement('div');
+            line.classList.add('terminal-line', 'terminal-input-line');
+            line.innerHTML = `<span class="prompt-user">caothongdev@portfolio:~$</span> <span class="input-text"></span><span class="caret"></span>`;
+            terminalBody.appendChild(line);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+            updateInputDisplay();
+            terminalWindow.focus();
+        }
+
+        terminalWindow.addEventListener('click', () => {
+            if (!terminalBody.querySelector('.terminal-input-line')) {
+                createNewInputLine();
+            }
+            terminalWindow.focus();
+        });
+
+        terminalWindow.addEventListener('keydown', async (e) => {
+            e.stopPropagation();
+
+            if (e.key === 'Enter') {
+                if (isAiThinking) return;
+                const commandToRun = currentInput;
+                currentInput = '';
+                updateInputDisplay();
+                await handleTerminalInput(commandToRun);
+                createNewInputLine();
+            } else if (e.key === 'Backspace') {
+                currentInput = currentInput.slice(0, -1);
+                updateInputDisplay();
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    currentInput = commandHistory[historyIndex];
+                    updateInputDisplay();
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    currentInput = commandHistory[historyIndex];
+                    updateInputDisplay();
+                } else {
+                    historyIndex = commandHistory.length;
+                    currentInput = '';
+                    updateInputDisplay();
+                }
+            } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
+                if(isAiThinking) return;
+                currentInput += e.key;
+                updateInputDisplay();
+                if (e.key === " ") e.preventDefault();
+            }
+        });
+        
+        // --- Khởi tạo Terminal ---
+        typeToTerminal("Chào mừng đến với Terminal Tương Tác của caothong.dev.", 'system');
+        typeToTerminal("Gõ 'help' để xem các lệnh có sẵn.", 'system');
+        typeToTerminal("Gõ 'ask [câu hỏi của bạn]' để trò chuyện với trợ lý AI của tôi.", 'system');
+        createNewInputLine();
     }
 
 
@@ -1192,16 +1490,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.onload = () => {
         document.body.dataset.justLoaded = 'true';
-        const loadingBar = document.querySelector('#loading-screen .loading-bar');
         if (loadingBar) {
-            const loadingBarAfter = window.getComputedStyle(loadingBar, '::after');
-            const animationDuration = parseFloat(loadingBarAfter.animationDuration) * 1000;
+            loadingBar.classList.add('finished');
             setTimeout(() => {
-                loadingBar.classList.add('finished');
                 switchScreen(loadingScreen, lobbyScreen, () => {
+                    if (mainNav) mainNav.style.display = 'none'; // Ẩn nav ở lobby
                     if (lobbySloganElement) typeWriter(lobbySloganElement, getRandomItem(slogans), 70);
+
                     const userAllowedMusic = localStorage.getItem('userAllowedMusic') === 'true';
                     const lastSong = localStorage.getItem('lastSelectedSongSrc');
+
                     if (userAllowedMusic && lastSong) {
                         playMusic();
                     } else {
@@ -1211,6 +1509,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             setTimeout(showMusicPrompt, 700);
                         }
                     }
+
                     if (!localStorage.getItem('hasVisited')) {
                         unlockAchievement('firstVisit');
                         localStorage.setItem('hasVisited', 'true');
@@ -1219,58 +1518,73 @@ document.addEventListener('DOMContentLoaded', () => {
                         unlockAchievement('nightOwl');
                     }
                 });
-            }, animationDuration > 0 ? animationDuration : 500);
+            }, 500);
         }
     };
 
     // === GẮN CÁC EVENT LISTENER KHÁC ===
     if (lobbyScreen && mainContent) {
-        let lobbyScreenClicked = false;
         lobbyScreen.addEventListener('click', (event) => {
-            if (lobbyScreenClicked || !lobbyScreen.classList.contains('active')) return;
-            if ((musicSelectorIcon && musicSelectorIcon.contains(event.target)) ||
-                (songSelectionModal && songSelectionModal.classList.contains('active') && songSelectionModal.contains(event.target))) {
+            if (
+                (musicSelectorIcon && musicSelectorIcon.contains(event.target)) ||
+                (songSelectionModal && songSelectionModal.classList.contains('active') && songSelectionModal.contains(event.target))
+            ) {
                 return;
             }
+            if (lobbyScreenClicked || !lobbyScreen.classList.contains('active')) return;
+
             lobbyScreenClicked = true;
-            switchScreen(lobbyScreen, mainContent, () => { });
+            switchScreen(lobbyScreen, mainContent, () => {
+                if (mainNav) mainNav.style.display = 'flex';
+                applyTypingEffectToElements();
+            });
+        });
+    }
+
+    const backToLobbyBtn = document.getElementById('back-to-lobby-btn');
+    if (backToLobbyBtn && lobbyScreen && mainContent) {
+        backToLobbyBtn.addEventListener('click', () => {
+            stopMusic();
+            switchScreen(mainContent, lobbyScreen, () => {
+                if (mainNav) mainNav.style.display = 'none';
+                lobbyScreenClicked = false;
+                if (lobbySloganElement) {
+                    typeWriter(lobbySloganElement, getRandomItem(slogans), 70);
+                }
+            });
         });
     }
 
     if (volumeBtn) {
+        let hideSliderTimeout;
+        const showVolumeSlider = () => {
+            if (!volumeSlider) return;
+            clearTimeout(hideSliderTimeout);
+            volumeSlider.classList.remove('hidden');
+            volumeSlider.style.opacity = '1';
+        };
+        const hideVolumeSlider = () => {
+            if (!volumeSlider || document.activeElement === volumeSlider) return;
+            hideSliderTimeout = setTimeout(() => {
+                volumeSlider.style.opacity = '0';
+                setTimeout(() => {
+                    if (!volumeSlider.matches(':hover') && !volumeBtn.matches(':hover')) {
+                        volumeSlider.classList.add('hidden');
+                    }
+                }, 300);
+            }, 1500);
+        };
         volumeBtn.addEventListener('click', toggleMute);
+        const controlsContainer = document.getElementById('controls-container');
+        if (controlsContainer) {
+            controlsContainer.addEventListener('mouseenter', showVolumeSlider);
+            controlsContainer.addEventListener('mouseleave', hideVolumeSlider);
+        }
         if (volumeSlider) {
-            let hideSliderTimeout;
-            const showVolumeSlider = () => {
-                clearTimeout(hideSliderTimeout);
-                volumeSlider.classList.remove('hidden');
-                volumeSlider.style.opacity = '1';
-            };
-            const hideVolumeSlider = () => {
-                if (document.activeElement === volumeSlider) return;
-                hideSliderTimeout = setTimeout(() => {
-                    volumeSlider.style.opacity = '0';
-                    setTimeout(() => {
-                        if (!volumeSlider.matches(':hover') && !volumeBtn.matches(':hover')) {
-                            volumeSlider.classList.add('hidden');
-                        }
-                    }, 300);
-                }, 1500);
-            };
-
-            volumeBtn.addEventListener('mouseenter', showVolumeSlider);
-            volumeSlider.addEventListener('mouseenter', showVolumeSlider);
-
-            const controlsContainer = document.getElementById('controls-container');
-            if (controlsContainer) {
-                controlsContainer.addEventListener('mouseleave', hideVolumeSlider);
-            } else {
-                volumeBtn.addEventListener('mouseleave', hideVolumeSlider);
-                volumeSlider.addEventListener('mouseleave', hideVolumeSlider);
-            }
             volumeSlider.addEventListener('blur', hideVolumeSlider);
         }
     }
+
     if (volumeSlider && audioPlayer) {
         volumeSlider.addEventListener('input', () => {
             const newVolume = parseFloat(volumeSlider.value);
@@ -1285,13 +1599,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
-        volumeSlider.addEventListener('mousedown', () => volumeSlider.classList.remove('hidden'));
-        volumeSlider.addEventListener('touchstart', () => volumeSlider.classList.remove('hidden'), {
-            passive: true
-        });
     }
 
-    // --- [NÂNG CẤP UX] --- Lưu lựa chọn của người dùng
     if (playMusicYesBtn) playMusicYesBtn.addEventListener('click', () => {
         try { localStorage.setItem('userAllowedMusic', 'true'); } catch (e) { console.error(e); }
         handleMusicPromptPreference();
@@ -1343,7 +1652,58 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    if (bioLearnMoreBtn) bioLearnMoreBtn.addEventListener('click', openBioModal);
+    const caseStudyTriggers = document.querySelectorAll('.case-study-trigger');
+    const caseStudyModal = document.getElementById('case-study-modal');
+
+    if (caseStudyTriggers.length > 0 && caseStudyModal) {
+        const closeCaseStudyModalBtn = caseStudyModal.querySelector('.modal-close-btn');
+        
+        const openCaseStudyModal = (data) => {
+            document.getElementById('case-study-modal-title').textContent = data.projectTitle;
+            document.getElementById('case-study-modal-image').src = data.projectImage;
+            document.getElementById('case-study-modal-role').textContent = data.projectRole;
+            document.getElementById('case-study-modal-description').textContent = data.projectDescription;
+            document.getElementById('case-study-modal-challenges').textContent = data.projectChallenges;
+            document.getElementById('case-study-modal-solution').textContent = data.projectSolution;
+
+            const tagsContainer = document.getElementById('case-study-modal-tags');
+            tagsContainer.innerHTML = '';
+            data.projectTags.split(',').forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'tag';
+                span.textContent = tag.trim();
+                tagsContainer.appendChild(span);
+            });
+
+            caseStudyModal.classList.remove('hidden');
+            requestAnimationFrame(() => caseStudyModal.classList.add('active'));
+            document.body.style.overflow = 'hidden';
+        }
+
+        const closeCaseStudyModal = () => {
+            caseStudyModal.classList.remove('active');
+            setTimeout(() => {
+                caseStudyModal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+
+        caseStudyTriggers.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                openCaseStudyModal(e.currentTarget.dataset);
+            });
+        });
+
+        closeCaseStudyModalBtn?.addEventListener('click', closeCaseStudyModal);
+        caseStudyModal.addEventListener('click', (e) => {
+            if (e.target === caseStudyModal) closeCaseStudyModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && caseStudyModal.classList.contains('active')) closeCaseStudyModal();
+        });
+    }
+
     if (closeBioModalBtn) closeBioModalBtn.addEventListener('click', closeBioModal);
     if (bioDetailsModal) {
         bioDetailsModal.addEventListener('click', (event) => {
@@ -1354,10 +1714,107 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    console.log("Khởi tạo JavaScript Nâng Cấp Toàn Diện hoàn tất.");
-});
-window.addEventListener('scroll', () => {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
-        unlockAchievement('explorer');
+    if (currentSongTitleElement && typeof openSongModal === 'function') {
+        currentSongTitleElement.style.cursor = 'pointer';
+        currentSongTitleElement.title = 'Nhấn để chọn nhạc nền';
+        currentSongTitleElement.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openSongModal();
+        });
     }
-}, { passive: true });
+
+    const focusModeBtn = document.getElementById('focus-mode-toggle');
+    const focusModeOverlay = document.getElementById('focus-mode-overlay');
+    const focusQuote = document.getElementById('focus-quote');
+    const pomodoroTimer = document.getElementById('pomodoro-timer');
+    const pomodoroToggle = document.getElementById('pomodoro-toggle');
+    const focusExitBtn = document.getElementById('focus-exit-btn');
+
+    if (focusModeBtn && focusModeOverlay) {
+        let pomodoroInterval = null;
+        let pomodoroTime = 25 * 60;
+        let pomodoroRunning = false;
+
+        const focusQuotes = [
+            "Stay hungry, stay foolish.", "Deep Work = Deep Results.",
+            "Đừng để bất cứ điều gì làm bạn xao nhãng.", "Focus is the new IQ.",
+            "Tập trung là siêu năng lực của thời đại số.", "Code. Eat. Sleep. Repeat."
+        ];
+
+        function updatePomodoroDisplay() {
+            if (!pomodoroTimer) return;
+            const min = String(Math.floor(pomodoroTime / 60)).padStart(2, '0');
+            const sec = String(pomodoroTime % 60).padStart(2, '0');
+            pomodoroTimer.textContent = `${min}:${sec}`;
+        }
+
+        function startPomodoro() {
+            if (pomodoroRunning) return;
+            pomodoroRunning = true;
+            pomodoroToggle.textContent = "Tạm dừng";
+            pomodoroInterval = setInterval(() => {
+                if (pomodoroTime > 0) {
+                    pomodoroTime--;
+                    updatePomodoroDisplay();
+                } else {
+                    clearInterval(pomodoroInterval);
+                    pomodoroRunning = false;
+                    pomodoroToggle.textContent = "Bắt đầu lại";
+                    pomodoroTimer.textContent = "Hoàn thành!";
+                }
+            }, 1000);
+        }
+
+        function pausePomodoro() {
+            pomodoroRunning = false;
+            pomodoroToggle.textContent = "Tiếp tục";
+            clearInterval(pomodoroInterval);
+        }
+
+        function resetPomodoro() {
+            pausePomodoro();
+            pomodoroTime = 25 * 60;
+            updatePomodoroDisplay();
+            pomodoroToggle.textContent = "Bắt đầu";
+        }
+        
+        function showFocusOverlay() {
+            focusModeOverlay.classList.remove('hidden');
+            focusModeOverlay.classList.add('visible');
+            focusQuote.textContent = getRandomItem(focusQuotes);
+            resetPomodoro();
+        }
+
+        function hideFocusOverlay() {
+            focusModeOverlay.classList.remove('visible');
+            focusModeOverlay.classList.add('hidden');
+            pausePomodoro();
+        }
+
+        focusModeBtn.addEventListener('click', () => {
+            const isActive = document.body.getAttribute('data-focus-mode') === 'true';
+            document.body.setAttribute('data-focus-mode', !isActive ? 'true' : 'false');
+            focusModeBtn.classList.toggle('active', !isActive);
+            if (!isActive) showFocusOverlay(); else hideFocusOverlay();
+        });
+
+        pomodoroToggle?.addEventListener('click', () => {
+            if (!pomodoroRunning && pomodoroTime === 0) resetPomodoro();
+            else if (pomodoroRunning) pausePomodoro();
+            else startPomodoro();
+        });
+
+        focusExitBtn?.addEventListener('click', () => {
+            document.body.setAttribute('data-focus-mode', 'false');
+            focusModeBtn?.classList.remove('active');
+            hideFocusOverlay();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (document.body.getAttribute('data-focus-mode') === 'true' && e.key === 'Escape') {
+                focusExitBtn?.click();
+            }
+        });
+    }
+
+});

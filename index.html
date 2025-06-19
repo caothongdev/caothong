@@ -5,58 +5,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hoàng Cao Thống (caothongdev) - Developer & Designer</title>
+
+    <!-- Meta Tags for SEO -->
     <meta name="description" content="Trang web cá nhân của Hoàng Cao Thống (caothongdev) - Developer, Designer. Khám phá các kỹ năng, dự án, bài viết blog và thông tin liên hệ.">
     <meta name="keywords" content="Hoàng Cao Thống, caothongdev, developer, designer, web developer, personal website, portfolio, lập trình viên, thiết kế web, trang web cá nhân, blog lập trình">
     <meta name="author" content="Hoàng Cao Thống">
     <meta name="theme-color" content="#0D1117" id="theme-color-meta">
 
+    <!-- Favicon and Apple Touch Icon -->
     <link rel="icon" href="assets/favicon-dark.png" type="image/png" id="favicon">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@700&family=Poppins:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://caothong.dev">
     <meta property="og:title" content="Hoàng Cao Thống (caothongdev) - Developer & Designer">
     <meta property="og:description" content="Khám phá trang web cá nhân của Hoàng Cao Thống - Developer, Designer. Xem các kỹ năng, dự án, bài viết blog và thông tin liên hệ.">
     <meta property="og:image" content="https://caothong.dev/assets/preview-image.png">
+
+    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://caothong.dev">
     <meta property="twitter:title" content="Hoàng Cao Thống (caothongdev) - Developer & Designer">
     <meta property="twitter:description" content="Khám phá trang web cá nhân của Hoàng Cao Thống - Developer, Designer. Xem các kỹ năng, dự án và thông tin liên hệ.">
     <meta property="twitter:image" content="https://caothong.dev/assets/preview-image.png">
+
+    <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body data-focus-mode="false">
-    <!-- [EASTER EGG] Canvas cho hiệu ứng Matrix Rain -->
-    <canvas id="matrix-canvas"></canvas>
 
+    <!-- Background Effects & Elements -->
+    <canvas id="matrix-canvas"></canvas>
+    <div id="cursor-trail"></div>
+    <div id="custom-cursor-element"></div>
     <audio id="background-audio" loop preload="metadata">
         <source src="assets/yung_kai-blue.mp3" type="audio/mpeg">
         Trình duyệt của bạn không hỗ trợ phát âm thanh.
     </audio>
 
+    <!-- Pre-content Screens -->
     <div id="loading-screen" class="screen active">
-        <div class="loading-bar-container">
-            <div class="loading-bar"></div>
-        </div>
         <div class="loading-content">
-            <img src="assets/rem.gif" alt="Ảnh đại diện caothong.dev đang tải" class="loading-avatar" loading="eager">
+            <img src="assets/rem.gif" alt="Ảnh đại diện caothongdev đang tải" class="loading-avatar" loading="eager">
             <h1>caothong.dev</h1>
             <p id="loading-message">Bình tĩnh nào cọu, đừng quạu liền nha cọu ơi!</p>
+        </div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
         </div>
     </div>
 
     <div id="lobby-screen" class="screen lobby-background">
         <div class="lobby-content">
             <div class="lobby-icon">
-                <img src="assets/rem.gif" alt="Biểu tượng trang chờ của caothong.dev" class="loading-avatar" loading="lazy">
+                <img src="assets/rem.gif" alt="Biểu tượng trang chờ của caothongdev" class="loading-avatar" loading="lazy">
             </div>
-            <h2>caothong.dev</h2>
+            <h2 id="lobby-greeting">Chào mừng bạn!</h2>
             <p id="lobby-slogan" class="typing-effect-target">...</p>
             <div id="music-selector-container">
                 <img src="assets/spotify.png" alt="Biểu tượng chọn nhạc nền" id="music-selector-icon" loading="lazy">
@@ -64,36 +78,25 @@
         </div>
     </div>
 
-    <div id="song-selection-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="song-modal-title">
-        <div class="modal-content">
-            <h3 id="song-modal-title">Chọn nhạc nền</h3>
-            <ul id="song-list" aria-label="Danh sách bài hát">
-                <li data-src="assets/yung_kai-blue.mp3" tabindex="0">Yung Kai - Blue</li>
-                <li data-src="assets/lofi-chill.mp3" tabindex="0">Lofi Chill #1</li>
-                <li data-src="assets/relaxing-beats.mp3" tabindex="0">Relaxing Beats #2</li>
-            </ul>
-            <button id="close-modal-song" class="btn btn-secondary btn-small">Đóng</button>
-        </div>
-    </div>
-
-    <div id="cursor-trail"></div>
-    <div id="custom-cursor-element"></div>
-
-    <!-- [CẬP NHẬT] Thanh điều hướng chính -->
+    <!-- Main Navigation -->
     <nav class="main-nav">
         <div class="nav-container">
             <a href="#" class="nav-logo">caothong.dev</a>
             <div class="nav-links">
-                <a href="#bio" class="nav-link">Giới thiệu</a>
+                <!-- ======================================================= -->
+                <!-- CẬP NHẬT THỨ TỰ NAVLINK ĐỂ KHỚP VỚI BỐ CỤC MỚI       -->
+                <!-- ======================================================= -->
+                <a href="#about" class="nav-link">Giới thiệu</a>
+                <a href="#featured-projects" class="nav-link">Dự án</a>
                 <a href="#skills" class="nav-link">Kỹ năng</a>
-                <a href="#featured-links" class="nav-link">Dự án</a>
-                <!-- [MỚI] Thêm mục Blog và Roadmap -->
-                <a href="#blog" class="nav-link">Blog</a>
                 <a href="#roadmap" class="nav-link">Lộ trình</a>
+                <a href="#blog" class="nav-link">Blog</a>
                 <a href="#contact" class="nav-link">Liên hệ</a>
             </div>
             <div class="nav-controls">
-                <!-- [MỚI] Thêm nút Focus Mode -->
+                <button id="back-to-lobby-btn" class="nav-control-btn" aria-label="Quay lại màn hình chờ" title="Quay lại màn hình chờ">
+                    <i class="fas fa-home"></i>
+                </button>
                 <button id="focus-mode-toggle" class="nav-control-btn" aria-label="Bật chế độ tập trung" title="Chế độ tập trung">
                     <i class="fas fa-eye"></i>
                 </button>
@@ -101,21 +104,25 @@
                     <i class="fas fa-terminal"></i>
                 </button>
                 <button id="cursor-toggle-btn" class="nav-control-btn" aria-label="Tắt hiệu ứng con trỏ" aria-pressed="true" title="Bật/tắt hiệu ứng con trỏ">
-                    <i class="fas fa-mouse-pointer"></i>
+                    <i class="fas fa-mouse-pointer cursor-icon-on"></i>
+                    <i class="fas fa-ban cursor-icon-off" style="display: none;"></i>
                 </button>
-                <button id="theme-toggle-btn" class="nav-control-btn" aria-label="Chuyển sang giao diện sáng" title="Đổi giao diện">
+                <button id="theme-toggle-btn" class="nav-control-btn" aria-label="Chuyển đổi giao diện" title="Đổi giao diện">
                     <i class="fas fa-sun theme-icon-sun"></i>
                     <i class="fas fa-moon theme-icon-moon" style="display: none;"></i>
                 </button>
             </div>
-             <button class="nav-mobile-toggle" aria-label="Mở menu điều hướng">
+            <button class="nav-mobile-toggle" aria-label="Mở menu điều hướng" aria-expanded="false">
                 <i class="fas fa-bars"></i>
             </button>
         </div>
     </nav>
 
+    <!-- Main Content -->
     <main id="main-content" class="screen">
         <div class="main-container">
+
+            <!-- Profile Header -->
             <header class="profile-header">
                 <div class="profile-avatar-container" data-clicks="0" title="Click vào đây thử xem!">
                     <img src="assets/rem.gif" alt="Ảnh đại diện chính của Hoàng Cao Thống" class="profile-avatar lightbox-trigger" loading="lazy">
@@ -124,16 +131,11 @@
                 <div class="profile-details">
                     <h1>
                         caothongdev
-                        <span class="verified-badge" aria-label="Tài khoản đã xác minh" title="Đã xác minh">
-                            <i class="fas fa-check"></i>
-                        </span>
                         <span class="online-status-indicator" title="Đang hoạt động"></span>
                     </h1>
                     <p class="profile-tagline typing-effect-target">Developer | Designer | Dream Chaser</p>
                     <div class="profile-meta">
-                        <span>
-                            <i class="fas fa-map-marker-alt icon"></i> Vietnam / Can Tho
-                        </span>
+                        <span><i class="fas fa-map-marker-alt icon"></i> Vietnam / Can Tho</span>
                         <a href="https://github.com/caothongdev" target="_blank" rel="noopener noreferrer me" title="Truy cập GitHub của caothongdev">
                             <i class="fab fa-github icon"></i> My Github
                         </a>
@@ -146,10 +148,18 @@
                 </div>
             </header>
 
-            <!-- [CẬP NHẬT] Thay đổi mục Giới thiệu thành dạng Terminal -->
-            <section id="bio" class="content-section" aria-labelledby="bio-heading">
-                <h2 id="bio-heading" class="visually-hidden">Giới thiệu về tôi</h2>
-                <div class="terminal-window" id="terminal">
+            <!-- =================================================================== -->
+            <!-- BỐ CỤC NỘI DUNG MỚI ĐÃ ĐƯỢC SẮP XẾP LẠI                      -->
+            <!-- =================================================================== -->
+
+            <!-- 1. About Section -->
+            <section id="about" class="content-section" aria-labelledby="about-heading">
+                <h2 id="about-heading">Giới thiệu 👨‍💻</h2>
+                <p class="text-secondary mb-3">
+                    Xin chào! Tôi là Thống, một lập trình viên và nhà thiết kế với niềm đam mê tạo ra những sản phẩm kỹ thuật số đẹp mắt, hữu ích và mang lại trải nghiệm tuyệt vời cho người dùng.
+                    Màn hình Terminal bên dưới là nơi bạn có thể "giao tiếp" trực tiếp với trang web này, gõ `help` để bắt đầu nhé!
+                </p>
+                <div class="terminal-window" id="terminal" tabindex="0">
                     <div class="terminal-header">
                         <div class="terminal-buttons">
                             <span class="terminal-button red"></span>
@@ -159,29 +169,120 @@
                         <div class="terminal-title">caothongdev@portfolio: ~</div>
                     </div>
                     <div class="terminal-body" id="terminal-body">
-                        <!-- Nội dung terminal sẽ được JS chèn vào đây -->
+                        <!-- Content is dynamically inserted by script.js -->
                     </div>
                 </div>
             </section>
 
-            <!-- [CẬP NHẬT] Thêm data-attributes cho mục Skills -->
+            <!-- 2. Featured Projects Section -->
+            <section id="featured-projects" class="content-section" aria-labelledby="featured-projects-heading">
+                <h2 id="featured-projects-heading">Dự án nổi bật 🚀</h2>
+                <div class="projects-carousel-wrapper">
+                    <div class="featured-links-grid projects-grid">
+
+                        <!-- Project Item 1: V Store -->
+                        <article class="project-item">
+                            <div class="project-image-container">
+                                <picture>
+                                    <source srcset="assets/store.webp" type="image/webp">
+                                    <img src="assets/veltrix_logo.png" alt="V Store - Dịch vụ tài khoản Premium và cày game uy tín" class="featured-link-thumbnail lightbox-trigger" loading="lazy">
+                                </picture>
+                            </div>
+                            <h3>V Store</h3>
+                            <p>Cửa hàng cung cấp tài khoản dịch vụ số và game với giá tốt, bảo hành uy tín và chuyên nghiệp.</p>
+                             <div class="project-tags">
+                                 <span class="tag">Node.js</span>
+                                 <span class="tag">JavaScript</span>
+                                 <span class="tag">Figma</span>
+                             </div>
+                            <div class="featured-link-actions">
+                                <!-- THAY ĐỔI: Thêm class và data attributes cho nút Case Study -->
+                                <a href="#" class="btn btn-primary case-study-trigger" 
+                                    data-project-title="V Store - Dịch vụ số uy tín"
+                                    data-project-image="assets/store.webp"
+                                    data-project-role="Lead Developer, UI/UX Designer"
+                                    data-project-description="V Store là dự án thương mại điện tử chuyên cung cấp các tài khoản dịch vụ số (Netflix, Spotify,...) và dịch vụ game. Mục tiêu là tạo ra một nền tảng mua sắm nhanh chóng, an toàn và có hệ thống quản lý đơn hàng hiệu quả."
+                                    data-project-challenges="Xây dựng hệ thống thanh toán tự động an toàn. Giao diện thân thiện, dễ sử dụng trên cả máy tính và di động. Tối ưu hóa tốc độ tải trang để giữ chân khách hàng."
+                                    data-project-solution="Tích hợp API của các cổng thanh toán uy tín. Áp dụng Responsive Design và Mobile-First. Sử dụng kỹ thuật lazy loading cho hình ảnh và tối ưu hóa mã nguồn."
+                                    data-project-tags="Node.js,JavaScript,Figma,MySQL,API Integration"
+                                >Xem Case Study</a>
+                                <a href="#" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                            </div>
+                        </article>
+
+                        <!-- Project Item 2: AI Discord Bot -->
+                        <article class="project-item">
+                            <div class="project-image-container">
+                                <picture>
+                                    <source srcset="assets/discord-bot-project.webp" type="image/webp">
+                                    <img src="assets/discord-bot-project.png" alt="Mô tả dự án Bot Discord AI" class="featured-link-thumbnail lightbox-trigger" loading="lazy">
+                                </picture>
+                            </div>
+                            <h3>AI Discord Bot</h3>
+                            <p>Bot Discord thông minh tích hợp AI, hỗ trợ quản lý server, cung cấp tiện ích và tự động hóa các tác vụ.</p>
+                            <div class="project-tags">
+                                <span class="tag">Python</span>
+                                <span class="tag">TypeScript</span>
+                                <span class="tag">Docker</span>
+                            </div>
+                            <div class="featured-link-actions">
+                                <!-- THAY ĐỔI: Thêm class và data attributes cho nút Case Study -->
+                                <a href="#" class="btn btn-primary case-study-trigger"
+                                   data-project-title="AI Discord Bot - Trợ lý đa năng"
+                                   data-project-image="assets/discord-bot-project.webp"
+                                   data-project-role="AI Engineer, Backend Developer"
+                                   data-project-description="Một bot Discord mạnh mẽ được xây dựng với mục tiêu tự động hóa việc quản lý máy chủ, tăng tương tác người dùng và cung cấp các tính năng giải trí, tiện ích thông qua AI."
+                                   data-project-challenges="Xử lý lượng lớn yêu cầu đồng thời từ người dùng. Tích hợp các mô hình AI một cách hiệu quả để trả lời câu hỏi và tạo nội dung. Đảm bảo bot hoạt động ổn định 24/7."
+                                   data-project-solution="Sử dụng kiến trúc bất đồng bộ (asynchronous) của Python. Kết nối đến các API của OpenAI và các mô hình ngôn ngữ khác. Triển khai bot trên nền tảng Docker để dễ dàng quản lý và mở rộng."
+                                   data-project-tags="Python,TypeScript,Docker,OpenAI API,Discord.py"
+                                >Xem Case Study</a>
+                            </div>
+                        </article>
+
+                        <!-- Project Item 3: Portfolio Cá Nhân -->
+                        <article class="project-item">
+                            <div class="project-image-container">
+                                <picture>
+                                    <source srcset="assets/portfolio-project.webp" type="image/webp">
+                                    <img src="assets/portfolio-project.png" alt="Mô tả dự án Website Cá Nhân Portfolio" class="featured-link-thumbnail lightbox-trigger" loading="lazy">
+                                </picture>
+                            </div>
+                            <h3>Portfolio Cá Nhân</h3>
+                            <p>Chính là trang web bạn đang xem, được xây dựng để giới thiệu bản thân, kỹ năng và các dự án đã thực hiện.</p>
+                            <div class="project-tags">
+                                <span class="tag">HTML5</span>
+                                <span class="tag">CSS3</span>
+                                <span class="tag">JavaScript</span>
+                            </div>
+                            <div class="featured-link-actions">
+                                <a href="https://github.com/caothongdev/my-portfolio" target="_blank" rel="noopener noreferrer" class="btn btn-secondary"><i class="fab fa-github"></i> GitHub</a>
+                            </div>
+                        </article>
+
+                    </div>
+                    <button class="carousel-control prev" aria-label="Dự án trước"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-control next" aria-label="Dự án tiếp theo"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </section>
+
+            <!-- 3. Skills Section -->
             <section id="skills" class="content-section" aria-labelledby="skills-heading">
                 <h2 id="skills-heading">Kỹ năng & Công nghệ 💡</h2>
                 <p class="text-secondary mb-3">Di chuột qua một kỹ năng để xem chi tiết về mức độ thành thạo và các dự án đã áp dụng.</p>
                 <div class="skills-grid">
-                     <div class="skill-category">
+                    <div class="skill-category">
                         <h3><i class="fas fa-palette skill-category-icon"></i> UI/UX Design</h3>
                         <ul class="skill-tags">
-                            <li data-proficiency="80" data-projects="Portfolio Cá Nhân, Light Store">Figma</li>
-                            <li data-proficiency="75" data-projects="Portfolio Cá Nhân, Light Store">System Making</li>
+                            <li data-proficiency="80" data-projects="Portfolio Cá Nhân, V Store">Figma</li>
+                            <li data-proficiency="75" data-projects="Portfolio Cá Nhân, V Store">System Making</li>
                         </ul>
                     </div>
                     <div class="skill-category">
                         <h3><i class="fas fa-code skill-category-icon"></i> Web Development</h3>
                         <ul class="skill-tags">
-                            <li data-proficiency="85" data-projects="AI Discord Bot, Light Store">Node.js</li>
+                            <li data-proficiency="85" data-projects="AI Discord Bot, V Store">Node.js</li>
                             <li data-proficiency="70" data-projects="AI Discord Bot">TypeScript</li>
-                            <li data-proficiency="90" data-projects="Portfolio Cá Nhân, Light Store">JavaScript</li>
+                            <li data-proficiency="90" data-projects="Portfolio Cá Nhân, V Store">JavaScript</li>
                             <li data-proficiency="95" data-projects="Portfolio Cá Nhân">CSS3</li>
                             <li data-proficiency="95" data-projects="Portfolio Cá Nhân">HTML5</li>
                         </ul>
@@ -191,7 +292,7 @@
                         <ul class="skill-tags">
                             <li data-proficiency="90" data-projects="AI Discord Bot, Automation Tools">Python</li>
                             <li data-proficiency="60" data-projects="University Projects">C/C++</li>
-                            <li data-proficiency="75" data-projects="Light Store">SQL (MySQL)</li>
+                            <li data-proficiency="75" data-projects="V Store">SQL (MySQL)</li>
                         </ul>
                     </div>
                     <div class="skill-category">
@@ -206,58 +307,86 @@
                 </div>
             </section>
 
-            <section id="featured-links" class="content-section" aria-labelledby="featured-links-heading">
-                <h2 id="featured-links-heading">Dự án nổi bật 🚀</h2>
-                <div class="projects-carousel-wrapper">
-                    <div class="featured-links-grid projects-grid">
-                        <article class="project-item">
-                            <div class="project-image-container">
-                                <img src="assets/store.png" alt="Light Store - Dịch vụ tài khoản Premium và cày game uy tín" class="featured-link-thumbnail lightbox-trigger" loading="lazy">
+            <!-- 4. Roadmap Section (ĐÃ ĐƯỢC DI CHUYỂN LÊN ĐÂY) -->
+            <section id="roadmap" class="content-section" aria-labelledby="roadmap-heading">
+                <h2 id="roadmap-heading">Hành Trình Chinh Phục 🗺️</h2>
+                <div class="conquest-grid">
+                    <div class="phase-card done">
+                        <div class="phase-header">
+                            <div class="phase-icon"><i class="fas fa-flag"></i></div>
+                            <div class="phase-title">
+                                <h3>Giai Đoạn 1: Nền Tảng</h3>
+                                <span>Q2 2024 - Đã Hoàn Thành</span>
                             </div>
-                            <h3>Light Store</h3>
-                            <p>Cửa hàng cung cấp tài khoản dịch vụ số và game với giá tốt, bảo hành uy tín và chuyên nghiệp.</p>
-                            <div class="featured-link-actions">
-                                <a href="case-study-light-store.html" class="btn btn-primary">Xem Case Study</a>
-                                <a href="https://github.com/caothongdev/light-store-demo" target="_blank" rel="noopener noreferrer" class="btn btn-secondary"><i class="fab fa-github"></i> GitHub</a>
-                            </div>
-                        </article>
-
-                        <article class="project-item">
-                            <div class="project-image-container">
-                                <img src="assets/discord-bot-project.png" alt="Mô tả dự án Bot Discord AI" class="featured-link-thumbnail lightbox-trigger" loading="lazy">
-                            </div>
-                            <h3>AI Discord Bot</h3>
-                            <p>Bot Discord thông minh tích hợp AI, hỗ trợ quản lý server, cung cấp tiện ích và tự động hóa các tác vụ.</p>
-                             <div class="featured-link-actions">
-                                <a href="case-study-discord-bot.html" class="btn btn-primary">Xem Case Study</a>
-                                <a href="https://github.com/caothongdev/ai-discord-bot-demo" target="_blank" rel="noopener noreferrer" class="btn btn-secondary"><i class="fab fa-github"></i> GitHub</a>
-                            </div>
-                        </article>
-
-                        <article class="project-item">
-                            <div class="project-image-container">
-                                <img src="assets/portfolio-project.png" alt="Mô tả dự án Website Cá Nhân Portfolio" class="featured-link-thumbnail lightbox-trigger" loading="lazy">
-                            </div>
-                            <h3>Portfolio Cá Nhân</h3>
-                            <p>Trang web cá nhân này được xây dựng để giới thiệu bản thân, kỹ năng và các dự án đã thực hiện.</p>
-                            <div class="featured-link-actions">
-                               <a href="case-study-portfolio.html" class="btn btn-primary">Xem Case Study</a>
-                               <a href="https://github.com/caothongdev/my-portfolio" target="_blank" rel="noopener noreferrer" class="btn btn-secondary"><i class="fab fa-github"></i> GitHub</a>
-                            </div>
-                        </article>
+                        </div>
+                        <div class="phase-body">
+                            <p><strong>Mục tiêu:</strong> Xây dựng và ra mắt Portfolio cá nhân phiên bản đầu tiên.</p>
+                            <ul>
+                                <li><i class="fas fa-check-circle"></i> Hoàn thiện giao diện & tính năng cốt lõi.</li>
+                                <li><i class="fas fa-check-circle"></i> Tích hợp hệ thống thành tựu & Easter Eggs.</li>
+                            </ul>
+                        </div>
                     </div>
-                    <button class="carousel-control prev" aria-label="Dự án trước"><i class="fas fa-chevron-left"></i></button>
-                    <button class="carousel-control next" aria-label="Dự án tiếp theo"><i class="fas fa-chevron-right"></i></button>
+                    <div class="phase-card in-progress">
+                        <div class="phase-header">
+                            <div class="phase-icon"><i class="fas fa-rocket"></i></div>
+                            <div class="phase-title">
+                                <h3>Giai Đoạn 2: Mở Rộng</h3>
+                                <span>Q3 2024 - Đang Thực Hiện</span>
+                            </div>
+                        </div>
+                        <div class="phase-body">
+                            <p><strong>Mục tiêu:</strong> Nâng cấp các dự án hiện có và khám phá công nghệ mới.</p>
+                            <ul>
+                                <li><i class="fas fa-spinner fa-spin"></i> Phát triển Bot Discord V2 với AI nâng cao.</li>
+                                <li><i class="fas fa-book-open"></i> Bắt đầu nghiên cứu về Golang.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="phase-card planned">
+                        <div class="phase-header">
+                            <div class="phase-icon"><i class="fas fa-compass"></i></div>
+                            <div class="phase-title">
+                                <h3>Giai Đoạn 3: Khám Phá</h3>
+                                <span>Q4 2024 - Dự Kiến</span>
+                            </div>
+                        </div>
+                        <div class="phase-body">
+                            <p><strong>Mục tiêu:</strong> Áp dụng kiến thức mới vào các dự án thực tế.</p>
+                            <ul>
+                                <li><i class="far fa-circle"></i> Xây dựng một microservice bằng Golang.</li>
+                                <li><i class="far fa-circle"></i> Tìm hiểu cơ bản về CI/CD.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="phase-card planned">
+                        <div class="phase-header">
+                            <div class="phase-icon"><i class="fas fa-lightbulb"></i></div>
+                            <div class="phase-title">
+                                <h3>Giai Đoạn 4: Sáng Tạo</h3>
+                                <span>Q1 2025 - Tầm Nhìn</span>
+                            </div>
+                        </div>
+                        <div class="phase-body">
+                            <p><strong>Mục tiêu:</strong> Phát triển sản phẩm độc lập.</p>
+                            <ul>
+                                <li><i class="far fa-circle"></i> Lên ý tưởng và phát triển một sản phẩm SaaS nhỏ.</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </section>
-            
-            <!-- [MỚI] Thêm mục Blog -->
+
+            <!-- 5. Blog Section -->
             <section id="blog" class="content-section" aria-labelledby="blog-heading">
                 <h2 id="blog-heading">Góc chia sẻ & Blog 📝</h2>
                 <div class="blog-grid">
                     <a href="blog-post-1.html" class="blog-card-link">
                         <article class="blog-card">
-                            <img src="https://placehold.co/600x400/0D1117/c9d1d9?text=Portfolio" alt="Hành trình tôi xây dựng trang web này" class="blog-card-image" loading="lazy">
+                           <picture>
+                                <source srcset="https://placehold.co/600x400/0D1117/c9d1d9.webp?text=Portfolio" type="image/webp">
+                                <img src="https://placehold.co/600x400/0D1117/c9d1d9.png?text=Portfolio" alt="Hành trình tôi xây dựng trang web này" class="blog-card-image" loading="lazy">
+                            </picture>
                             <div class="blog-card-content">
                                 <span class="blog-card-category">Case Study</span>
                                 <h3 class="blog-card-title">Behind the Scenes: Tôi đã xây dựng trang Portfolio này như thế nào?</h3>
@@ -267,73 +396,37 @@
                         </article>
                     </a>
                     <a href="blog-post-2.html" class="blog-card-link">
-                         <article class="blog-card">
-                            <img src="https://placehold.co/600x400/0D1117/c9d1d9?text=VSCode" alt="5 extensions VSCode" class="blog-card-image" loading="lazy">
+                        <article class="blog-card">
+                           <picture>
+                                <source srcset="https://placehold.co/600x400/0D1117/c9d1d9.webp?text=VSCode" type="image/webp">
+                                <img src="https://placehold.co/600x400/0D1117/c9d1d9.png?text=VSCode" alt="5 extensions VSCode" class="blog-card-image" loading="lazy">
+                            </picture>
                             <div class="blog-card-content">
                                 <span class="blog-card-category">Tools</span>
                                 <h3 class="blog-card-title">5 Extension VSCode 'Cứu Cánh' cho Lập trình viên JavaScript</h3>
                                 <p class="blog-card-excerpt">Tổng hợp 5 extension không thể thiếu giúp tăng tốc độ code, debug hiệu quả và giữ cho code của bạn luôn sạch đẹp.</p>
-                                 <span class="blog-card-readmore">Đọc thêm <i class="fas fa-arrow-right"></i></span>
+                                <span class="blog-card-readmore">Đọc thêm <i class="fas fa-arrow-right"></i></span>
                             </div>
                         </article>
                     </a>
                     <a href="blog-post-3.html" class="blog-card-link">
                         <article class="blog-card">
-                            <img src="https://placehold.co/600x400/0D1117/c9d1d9?text=Python" alt="Tự động hóa với Python" class="blog-card-image" loading="lazy">
+                           <picture>
+                                <source srcset="https://placehold.co/600x400/0D1117/c9d1d9.webp?text=Python" type="image/webp">
+                                <img src="https://placehold.co/600x400/0D1117/c9d1d9.png?text=Python" alt="Tự động hóa với Python" class="blog-card-image" loading="lazy">
+                            </picture>
                             <div class="blog-card-content">
                                 <span class="blog-card-category">Tutorial</span>
                                 <h3 class="blog-card-title">Xây Dựng Tool Tự Động Hóa Đầu Tiên với Python và Selenium</h3>
                                 <p class="blog-card-excerpt">Hướng dẫn từng bước để tạo một công cụ tự động hóa đơn giản, giúp bạn tiết kiệm thời gian cho các công việc lặp đi lặp lại hàng ngày.</p>
-                                 <span class="blog-card-readmore">Đọc thêm <i class="fas fa-arrow-right"></i></span>
+                                <span class="blog-card-readmore">Đọc thêm <i class="fas fa-arrow-right"></i></span>
                             </div>
                         </article>
                     </a>
                 </div>
             </section>
 
-            <!-- [MỚI] Thêm mục Lộ trình (Roadmap) -->
-            <section id="roadmap" class="content-section" aria-labelledby="roadmap-heading">
-                <h2 id="roadmap-heading">Lộ trình phát triển 🗺️</h2>
-                <div class="roadmap-container">
-                    <div class="roadmap-item" data-status="done">
-                        <div class="roadmap-point"></div>
-                        <div class="roadmap-content">
-                            <span class="roadmap-date">Q2 2024</span>
-                            <h3 class="roadmap-title">Hoàn thiện Portfolio Cá nhân V1</h3>
-                            <p class="roadmap-desc">Ra mắt phiên bản đầu tiên của trang web cá nhân với các tính năng cốt lõi.</p>
-                            <span class="roadmap-status done">Đã hoàn thành</span>
-                        </div>
-                    </div>
-                    <div class="roadmap-item" data-status="in-progress">
-                        <div class="roadmap-point"></div>
-                        <div class="roadmap-content">
-                            <span class="roadmap-date">Q3 2024</span>
-                            <h3 class="roadmap-title">Phát triển Bot Discord V2</h3>
-                            <p class="roadmap-desc">Tích hợp AI nâng cao, mở rộng các tính năng tự động hóa và quản lý thanh toán.</p>
-                             <span class="roadmap-status in-progress">Đang thực hiện</span>
-                        </div>
-                    </div>
-                    <div class="roadmap-item" data-status="planned">
-                         <div class="roadmap-point"></div>
-                        <div class="roadmap-content">
-                            <span class="roadmap-date">Q4 2024</span>
-                            <h3 class="roadmap-title">Học Golang & DevOps Basics</h3>
-                            <p class="roadmap-desc">Bắt đầu học ngôn ngữ Golang và các khái niệm cơ bản về CI/CD để tối ưu quy trình.</p>
-                            <span class="roadmap-status planned">Dự kiến</span>
-                        </div>
-                    </div>
-                     <div class="roadmap-item" data-status="planned">
-                         <div class="roadmap-point"></div>
-                        <div class="roadmap-content">
-                            <span class="roadmap-date">Q1 2025</span>
-                            <h3 class="roadmap-title">Xây dựng SaaS đầu tiên</h3>
-                            <p class="roadmap-desc">Lên ý tưởng và phát triển một sản phẩm Software-as-a-Service nhỏ để giải quyết một vấn đề thực tế.</p>
-                            <span class="roadmap-status planned">Dự kiến</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
+            <!-- 6. Testimonials Section -->
             <section id="testimonials" class="content-section" aria-labelledby="testimonials-heading">
                 <h2 id="testimonials-heading">Khách hàng & Mọi người nói gì 💬</h2>
                 <div class="testimonials-carousel-wrapper">
@@ -342,11 +435,11 @@
                             <img src="assets/sunidea.jpg" alt="Ảnh đại diện của Sun Idea" class="testimonial-avatar" loading="lazy">
                             <div class="testimonial-content">
                                 <blockquote>
-                                    <p>"Dịch vụ ở Light Store rất nhanh và uy tín. Mình mua Google One được hỗ trợ nhiệt tình, giá lại tốt nữa."</p>
+                                    <p>"Dịch vụ ở V Store rất nhanh và uy tín. Mình mua Google One được hỗ trợ nhiệt tình, giá lại tốt nữa."</p>
                                 </blockquote>
                                 <cite>
                                     <strong>Sun Idea</strong><br>
-                                    <span>Khách hàng Light Store</span>
+                                    <span>Khách hàng V Store</span>
                                 </cite>
                             </div>
                         </article>
@@ -380,13 +473,12 @@
                 </div>
             </section>
 
+            <!-- 7. Contact Section -->
             <section id="contact" class="content-section" aria-labelledby="contact-heading">
                 <h2 id="contact-heading">Kết nối & Hợp tác 📬</h2>
                 <p class="text-secondary mb-3">Bạn có ý tưởng hay dự án muốn hợp tác, hoặc đơn giản chỉ muốn gửi lời chào? Đừng ngần ngại liên hệ với tôi qua form dưới đây hoặc các mạng xã hội.</p>
-                
                 <div class="contact-form-wrapper">
-                    <!-- [CẬP NHẬT] Thay YOUR_UNIQUE_CODE bằng mã của bạn từ Formspree -->
-                    <form id="contact-form" action="https://formspree.io/f/your_unique_code_here" method="POST">
+                    <form id="contact-form" action="https://formspree.io/f/mkgbjjzw" method="POST">
                         <div class="form-group">
                             <label for="name">Tên của bạn</label>
                             <input type="text" id="name" name="name" required placeholder="Tên của bạn...">
@@ -395,45 +487,50 @@
                             <label for="email">Email</label>
                             <input type="email" id="email" name="email" required placeholder="Email để tôi có thể liên lạc lại...">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group full-width">
                             <label for="message">Lời nhắn</label>
                             <textarea id="message" name="message" rows="5" required placeholder="Nội dung lời nhắn của bạn..."></textarea>
                         </div>
-                        <div class="form-actions">
+                        <div class="form-actions full-width">
                             <button type="submit" class="btn btn-primary">Gửi Lời Nhắn</button>
                             <p class="form-status-message"></p>
                         </div>
                     </form>
                 </div>
-
                 <div class="contact-methods">
                     <div class="contact-links-wrapper">
                         <h3 class="contact-subtitle">Hoặc qua Mạng xã hội & Cộng đồng</h3>
                         <div class="contact-links-grid">
-                            <a href="https://www.facebook.com/caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                <img src="assets/icons/facebook.png" alt="Biểu tượng Facebook" class="icon"><span>Facebook</span>
+                             <a href="https://www.facebook.com/caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer">
+                                <img src="assets/icons/facebook.png" alt="Facebook" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>Facebook</span>
                             </a>
-                            <a href="https://zalo.me/0794243312" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                <img src="assets/icons/zalo.png" alt="Biểu tượng Zalo" class="icon"><span>Zalo</span>
+                             <a href="https://zalo.me/0794243312" class="contact-link-item" target="_blank" rel="noopener noreferrer">
+                                <img src="assets/icons/zalo.png" alt="Zalo" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>Zalo</span>
                             </a>
-                            <a href="https://t.me/lightshopvn" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                <img src="assets/icons/telegram.webp" alt="Biểu tượng Telegram" class="icon"><span>Telegram</span>
+                             <a href="https://t.me/lightshopvn" class="contact-link-item" target="_blank" rel="noopener noreferrer">
+                                <img src="assets/icons/telegram.webp" alt="Telegram" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>Telegram</span>
                             </a>
-                            <!-- [CẬP NHẬT] URL YouTube và Discord của bạn -->
-                            <a href="https://youtube.com/@caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer"> 
-                                <img src="assets/icons/youtube.webp" alt="Biểu tượng YouTube" class="icon"><span>YouTube</span>
+                             <a href="https://youtube.com/@caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer">
+                                <img src="assets/icons/youtube.webp" alt="YouTube" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>YouTube</span>
                             </a>
                             <a href="https://www.tiktok.com/@caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                <img src="assets/icons/tiktok.webp" alt="Biểu tượng TikTok" class="icon"><span>TikTok</span>
+                                <img src="assets/icons/tiktok.webp" alt="TikTok" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>TikTok</span>
                             </a>
                             <a href="https://discord.gg/your-server-invite" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                <img src="assets/icons/discord.png" alt="Biểu tượng Discord" class="icon"><span>Discord</span>
+                                <img src="assets/discord.png" alt="Discord" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>Discord</span>
                             </a>
                         </div>
                     </div>
                 </div>
             </section>
 
+            <!-- 8. Payment Section -->
             <section id="payment" class="content-section" aria-labelledby="payment-heading">
                 <h2 id="payment-heading">Thông tin thanh toán 💳</h2>
                 <div class="payment-grid">
@@ -444,7 +541,7 @@
                         </div>
                         <div class="payment-value-container">
                             <span class="payment-value" id="momo-account">0795483703</span>
-                            <button class="btn btn-small btn-tertiary btn-copy-account" data-clipboard-target="#momo-account" title="Sao chép số Momo">
+                            <button class="btn btn-small btn-secondary btn-copy-account" data-clipboard-target="#momo-account" title="Sao chép số Momo">
                                 <i class="far fa-copy"></i> Sao chép
                             </button>
                         </div>
@@ -457,7 +554,7 @@
                         </div>
                         <div class="payment-value-container">
                             <span class="payment-value" id="mbbank-account">0794243312</span>
-                            <button class="btn btn-small btn-tertiary btn-copy-account" data-clipboard-target="#mbbank-account" title="Sao chép số MB Bank">
+                            <button class="btn btn-small btn-secondary btn-copy-account" data-clipboard-target="#mbbank-account" title="Sao chép số MB Bank">
                                 <i class="far fa-copy"></i> Sao chép
                             </button>
                         </div>
@@ -466,7 +563,7 @@
                 </div>
             </section>
 
-
+            <!-- Page Footer -->
             <footer class="page-footer">
                 <div class="footer-content">
                     <div class="footer-quote">
@@ -477,16 +574,60 @@
                         &copy; <span id="current-year"></span> Hoàng Cao Thống (caothongdev). All Rights Reserved.
                     </div>
                 </div>
-                 <button id="scroll-to-top-btn" class="btn btn-secondary btn-small" title="Lên đầu trang"><i class="fas fa-arrow-up"></i></button>
+                <button id="scroll-to-top-btn" class="btn btn-secondary btn-small" title="Lên đầu trang"><i class="fas fa-arrow-up"></i></button>
             </footer>
-        </div>
+
+        </div><!-- .main-container -->
     </main>
-    
+
+    <!-- =================================================================== -->
+    <!-- MODALS & OVERLAYS                                                   -->
+    <!-- =================================================================== -->
+
+    <!-- THÊM MỚI: Modal cho Case Study chi tiết -->
+    <div id="case-study-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="case-study-modal-title">
+        <div class="modal-content case-study-modal-content">
+            <button class="modal-close-btn" aria-label="Đóng Case Study">&times;</button>
+            <h3 id="case-study-modal-title"></h3>
+            <div class="case-study-modal-body">
+                <img id="case-study-modal-image" src="" alt="Hình ảnh chi tiết dự án" loading="lazy">
+                
+                <h4><i class="fas fa-user-tie"></i> Vai trò trong dự án</h4>
+                <p id="case-study-modal-role"></p>
+
+                <h4><i class="fas fa-file-alt"></i> Mô tả</h4>
+                <p id="case-study-modal-description"></p>
+
+                <h4><i class="fas fa-tasks"></i> Thách thức</h4>
+                <p id="case-study-modal-challenges"></p>
+
+                <h4><i class="fas fa-lightbulb"></i> Giải pháp</h4>
+                <p id="case-study-modal-solution"></p>
+
+                <h4><i class="fas fa-tags"></i> Công nghệ sử dụng</h4>
+                <div id="case-study-modal-tags" class="project-tags"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="song-selection-modal" class="hidden" role="dialog" aria-modal="true" aria-labelledby="song-modal-title">
+        <div class="modal-content">
+            <h3 id="song-modal-title">Chọn nhạc nền</h3>
+            <ul id="song-list" aria-label="Danh sách bài hát">
+                <li data-src="assets/yung_kai-blue.mp3" tabindex="0">Yung Kai - Blue</li>
+                <li data-src="assets/lofi-chill.mp3" tabindex="0">Lofi Chill #1</li>
+                <li data-src="assets/relaxing-beats.mp3" tabindex="0">Relaxing Beats #2</li>
+            </ul>
+            <button id="close-modal-song" class="btn btn-secondary btn-small">Đóng</button>
+        </div>
+    </div>
+
     <div id="command-palette-overlay" class="prompt-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="command-palette-title">
         <div id="command-palette-box" class="prompt-box">
             <div class="command-palette-header">
-                 <i class="fas fa-search"></i>
-                 <input type="text" id="command-palette-input" placeholder="Gõ lệnh hoặc tìm kiếm...">
+                <i class="fas fa-search"></i>
+                <input type="text" id="command-palette-input" placeholder="Gõ lệnh hoặc tìm kiếm...">
             </div>
             <ul id="command-palette-results"></ul>
             <div class="command-palette-footer">
@@ -497,7 +638,7 @@
 
     <div id="music-prompt-overlay" class="prompt-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="music-prompt-title" aria-describedby="music-prompt-desc">
         <div id="music-prompt-box" class="prompt-box">
-            <p id="music-prompt-title">Bạn có muốn bật nhạc nền không?</p>
+            <h3 id="music-prompt-title">Bạn có muốn bật nhạc nền không?</h3>
             <div class="prompt-actions-wrapper" id="music-prompt-desc">
                 <div class="prompt-buttons">
                     <button id="play-music-yes" class="btn btn-primary btn-small">Có</button>
@@ -514,29 +655,38 @@
     <div id="lightbox-overlay" class="lightbox-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="lightbox-image-alt">
         <span id="lightbox-close" class="lightbox-close" aria-label="Đóng ảnh phóng to" tabindex="0">&times;</span>
         <img id="lightbox-image" src="" alt="" aria-live="polite">
-        <span id="lightbox-image-alt" class="visually-hidden">Ảnh được phóng to</span>
+        <p id="lightbox-image-alt" class="visually-hidden">Ảnh được phóng to</p>
     </div>
 
     <div id="bio-details-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="bio-modal-title">
         <div class="modal-content bio-modal-content">
             <h3 id="bio-modal-title">Thông tin chi tiết về Hoàng Cao Thống</h3>
             <div id="bio-modal-body">
+                <!-- Content dynamically inserted by script.js -->
             </div>
             <button id="close-bio-modal" class="btn btn-secondary btn-small mt-3">Đóng</button>
         </div>
     </div>
 
+    <!-- Floating UI Elements -->
     <div id="toast-container" aria-live="assertive" aria-atomic="true"></div>
-
-    <!-- [MỚI] Container cho Achievement Pop-ups -->
     <div id="achievement-container"></div>
-
     <div id="controls-container">
+        <button id="volume-btn" aria-label="Tắt hoặc bật tiếng và điều chỉnh âm lượng"></button>
         <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2" class="hidden" aria-label="Điều chỉnh âm lượng">
-        <button id="volume-btn" aria-label="Tắt hoặc bật tiếng và điều chỉnh âm lượng">
-        </button>
         <div id="clock" aria-label="Thời gian hiện tại" role="timer">00:00:00</div>
     </div>
+    
+    <div id="focus-mode-overlay" class="focus-mode-overlay hidden">
+        <div class="focus-quote" id="focus-quote"></div>
+        <div class="focus-pomodoro">
+            <span id="pomodoro-timer">25:00</span>
+            <button id="pomodoro-toggle" class="btn btn-small">Bắt đầu</button>
+            <button id="focus-exit-btn" class="btn btn-small btn-danger">Thoát</button>
+        </div>
+    </div>
+
+    <!-- Main Script -->
     <script src="js/script.js" defer></script>
 </body>
 
