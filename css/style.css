@@ -3877,3 +3877,10 @@ body.menu-hidden .main-nav {
   overflow-y: auto;
   user-select: text;
 }
+.nav-logo {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+.nav-links {
+    margin-right: 1.5rem; /* Tăng khoảng cách giữa menu và cụm nút điều khiển */
+}

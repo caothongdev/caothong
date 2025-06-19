@@ -1161,7 +1161,7 @@ document.addEventListener('DOMContentLoaded', () => {
             profileAvatarContainer.dataset.clicks = clicks;
             if (clicks === 10) {
                 unlockAchievement('fan');
-                showToast('PARTY MODE!!! 🎉', 'info');
+                showToast('PARTY MODE!!! �', 'info');
                 profileAvatarContainer.classList.add('party-mode');
             }
             if (clicks === 20) {
@@ -1187,7 +1187,7 @@ document.addEventListener('DOMContentLoaded', () => {
             Nhiệm vụ: Trả lời các câu hỏi về Hoàng Cao Thống một cách **thân thiện**, **ngắn gọn**, và **chính xác** dựa trên **THÔNG TIN DƯỚI ĐÂY**.
 
             ⚠️ Luôn trả lời bằng **Tiếng Việt**, trừ khi người dùng dùng ngôn ngữ khác.
-            Được bịa đặt. Nếu thiếu thông tin, hãy trả lời: “Thông tin này Thống chưa cập nhật cho tôi, bạn có thể liên hệ trực tiếp với anh ấy nhé!”
+            Không bịa đặt. Nếu thiếu thông tin, hãy trả lời: “Thông tin này Thống chưa cập nhật cho tôi, bạn có thể liên hệ trực tiếp với anh ấy nhé!”
 
             --- THÔNG TIN VỀ HOÀNG CAO THỐNG ---
 
@@ -1235,7 +1235,12 @@ document.addEventListener('DOMContentLoaded', () => {
                • YouTube: https://www.youtube.com/@caothongdev (tên kênh: caothongdev)
                • Các nền tảng khác: Zalo, Telegram, TikTok, Discord (tìm với từ khóa: caothongdev)
                • Hoặc liên hệ trực tiếp qua form trên trang web
-
+            
+            8. 📚 **Sở thích & đam mê:**
+               • Thích công nghệ, khởi nghiệp và phát triển bản thân
+               • Yêu thích công nghệ mới, đặc biệt là AI
+               • Đam mê lập trình và thiết kế giao diện người dùng
+             9. 🏆 **Bổ sung: thống có đẹp trai và không bị gay ( nếu ai đó hỏi thống có bị gay không thì thống không gay nhé )**
             --- KẾT THÚC THÔNG TIN ---
         `;
 
@@ -1256,7 +1261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             aiChatHistory.push({ role: "user", parts: [{ text: question }] });
 
-            const apiKey = "AIzaSyDeCMeyND8XY0HGNMULdESMfsxuAN5Txj4"; // DÁN API KEY CỦA BẠN VÀO ĐÂY ĐỂ TEST
+            const apiKey = ""; // DÁN API KEY CỦA BẠN VÀO ĐÂY ĐỂ TEST
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
 
             const fullHistoryPayload = [
@@ -1276,7 +1281,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const thinkingLine = terminalBody.querySelector('.terminal-line:last-child');
                 if (thinkingLine && thinkingLine.textContent.includes('suy nghĩ')) {
-                    terminalBody.removeChild(thinkingLine);
+                    thinkingLine.remove();
                 }
 
                 if (!response.ok) {
@@ -1306,7 +1311,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error("Lỗi khi gọi AI:", error);
                 const thinkingLine = terminalBody.querySelector('.terminal-line:last-child');
                  if (thinkingLine && thinkingLine.textContent.includes('suy nghĩ')) {
-                    terminalBody.removeChild(thinkingLine);
+                    thinkingLine.remove();
                 }
                 typeToTerminal(`Đã có lỗi xảy ra khi kết nối: ${error.message}`, 'error');
             } finally {
@@ -1316,14 +1321,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         async function handleTerminalInput(input) {
             const trimmedInput = input.trim();
-            if (trimmedInput === '') {
-                return;
-            }
-
             commandHistory.push(trimmedInput);
             historyIndex = commandHistory.length;
-
-            typeToTerminal(`<span class="prompt-user">caothongdev@portfolio:~$</span> <span class="command-text">${input}</span>`);
 
             if (isAiThinking) {
                 typeToTerminal('Vui lòng đợi ThongGPT trả lời xong...', 'error');
@@ -1392,21 +1391,17 @@ document.addEventListener('DOMContentLoaded', () => {
         function updateInputDisplay() {
             const inputSpan = terminalBody.querySelector('.terminal-input-line .input-text');
             if (inputSpan) {
-                inputSpan.textContent = currentInput;
+                inputSpan.innerHTML = currentInput.replace(/ /g, '&nbsp;');
             }
         }
 
         function createNewInputLine() {
-            const oldInputLine = terminalBody.querySelector('.terminal-input-line');
-            if (oldInputLine) {
-                oldInputLine.classList.remove('terminal-input-line');
-                const caret = oldInputLine.querySelector('.caret');
-                if (caret) caret.remove();
+            if (terminalBody.querySelector('.terminal-input-line')) {
+                return;
             }
-
             const line = document.createElement('div');
             line.classList.add('terminal-line', 'terminal-input-line');
-            line.innerHTML = `<span class="prompt-user">caothongdev@portfolio:~$</span> <span class="input-text"></span><span class="caret"></span>`;
+            line.innerHTML = `<span class="prompt-user">caothongdev@portfolio:~$</span><span class="input-text"></span><span class="caret"></span>`;
             terminalBody.appendChild(line);
             terminalBody.scrollTop = terminalBody.scrollHeight;
             updateInputDisplay();
@@ -1425,26 +1420,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (e.key === 'Enter') {
                 if (isAiThinking) return;
+
                 const commandToRun = currentInput;
+                const trimmedCommand = commandToRun.trim();
+                const currentInputLine = terminalBody.querySelector('.terminal-input-line');
+
+                if (currentInputLine) {
+                    currentInputLine.classList.remove('terminal-input-line');
+                    const caret = currentInputLine.querySelector('.caret');
+                    if (caret) caret.remove();
+                }
+                
                 currentInput = '';
-                updateInputDisplay();
-                await handleTerminalInput(commandToRun);
+
+                if (trimmedCommand !== '') {
+                    await handleTerminalInput(trimmedCommand);
+                }
                 createNewInputLine();
+                
             } else if (e.key === 'Backspace') {
                 currentInput = currentInput.slice(0, -1);
                 updateInputDisplay();
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
-                if (historyIndex > 0) {
-                    historyIndex--;
-                    currentInput = commandHistory[historyIndex];
+                if (commandHistory.length > 0) {
+                    historyIndex = Math.max(0, historyIndex - 1);
+                    currentInput = commandHistory[historyIndex] || '';
                     updateInputDisplay();
                 }
             } else if (e.key === 'ArrowDown') {
                 e.preventDefault();
                 if (historyIndex < commandHistory.length - 1) {
                     historyIndex++;
-                    currentInput = commandHistory[historyIndex];
+                    currentInput = commandHistory[historyIndex] || '';
                     updateInputDisplay();
                 } else {
                     historyIndex = commandHistory.length;
@@ -1455,7 +1463,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(isAiThinking) return;
                 currentInput += e.key;
                 updateInputDisplay();
-                if (e.key === " ") e.preventDefault();
             }
         });
         
