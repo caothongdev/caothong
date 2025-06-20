@@ -3884,3 +3884,12 @@ body.menu-hidden .main-nav {
 .nav-links {
     margin-right: 1.5rem; /* Tăng khoảng cách giữa menu và cụm nút điều khiển */
 }
+#terminal-hidden-input {
+    position: absolute;
+    left: -9999px; /* Đẩy ra xa khỏi màn hình */
+    top: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;   /* Hoàn toàn trong suốt */
+    pointer-events: none; /* Không bắt sự kiện chuột/chạm */
+}
