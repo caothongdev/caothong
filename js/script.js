@@ -109,6 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const achievementContainer = document.getElementById('achievement-container');
     const terminalBody = document.getElementById('terminal-body');
     const terminalWindow = document.getElementById('terminal');
+    // [NÂNG CẤP] Lấy input ẩn cho terminal
+    const terminalHiddenInput = document.getElementById('terminal-hidden-input');
     const sections = document.querySelectorAll('.content-section');
 
     // --- Hằng số ---
@@ -1161,7 +1163,7 @@ document.addEventListener('DOMContentLoaded', () => {
             profileAvatarContainer.dataset.clicks = clicks;
             if (clicks === 10) {
                 unlockAchievement('fan');
-                showToast('PARTY MODE!!! �', 'info');
+                showToast('PARTY MODE!!! 🥳', 'info');
                 profileAvatarContainer.classList.add('party-mode');
             }
             if (clicks === 20) {
@@ -1173,15 +1175,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===================================================================
-    // LOGIC CHO TERMINAL TÍCH HỢP AI (PHẦN ĐÃ NÂNG CẤP)
+    // [NÂNG CẤP] LOGIC CHO TERMINAL TÍCH HỢP AI (TƯƠNG THÍCH DI ĐỘNG)
     // ===================================================================
-    if (terminalWindow && terminalBody) {
-        let currentInput = '';
+    if (terminalWindow && terminalBody && terminalHiddenInput) {
         let commandHistory = [];
         let historyIndex = -1;
         let isAiThinking = false;
         let aiChatHistory = [];
-        
+
         const personalContext = `
             Bạn là ThongGPT – trợ lý AI cá nhân được tích hợp trong terminal của portfolio Hoàng Cao Thống (caothongdev).
             Nhiệm vụ: Trả lời các câu hỏi về Hoàng Cao Thống một cách **thân thiện**, **ngắn gọn**, và **chính xác** dựa trên **THÔNG TIN DƯỚI ĐÂY**.
@@ -1262,6 +1263,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             aiChatHistory.push({ role: "user", parts: [{ text: question }] });
 
+            // TODO: Thay thế bằng API Key của bạn hoặc chuyển sang backend
             const apiKey = "AIzaSyDeCMeyND8XY0HGNMULdESMfsxuAN5Txj4"; // DÁN API KEY CỦA BẠN VÀO ĐÂY ĐỂ TEST
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
 
@@ -1280,7 +1282,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     body: JSON.stringify(payload)
                 });
 
-                const thinkingLine = terminalBody.querySelector('.terminal-line:last-child');
+                const thinkingLine = terminalBody.querySelector('.terminal-line.ai-response:last-of-type');
                 if (thinkingLine && thinkingLine.textContent.includes('suy nghĩ')) {
                     thinkingLine.remove();
                 }
@@ -1310,19 +1312,26 @@ document.addEventListener('DOMContentLoaded', () => {
             } catch (error) {
                 aiChatHistory.pop();
                 console.error("Lỗi khi gọi AI:", error);
-                const thinkingLine = terminalBody.querySelector('.terminal-line:last-child');
+                const thinkingLine = terminalBody.querySelector('.terminal-line.ai-response:last-of-type');
                  if (thinkingLine && thinkingLine.textContent.includes('suy nghĩ')) {
                     thinkingLine.remove();
                 }
                 typeToTerminal(`Đã có lỗi xảy ra khi kết nối: ${error.message}`, 'error');
             } finally {
                 isAiThinking = false;
+                // [NÂNG CẤP] Sau khi AI trả lời xong, tạo lại dòng lệnh mới nếu chưa có
+                if (!terminalBody.querySelector('.terminal-input-line')) {
+                   createNewInputLine();
+                }
             }
         }
         
         async function handleTerminalInput(input) {
             const trimmedInput = input.trim();
-            commandHistory.push(trimmedInput);
+            
+            if (trimmedInput && commandHistory[commandHistory.length - 1] !== trimmedInput) {
+                commandHistory.push(trimmedInput);
+            }
             historyIndex = commandHistory.length;
 
             if (isAiThinking) {
@@ -1368,7 +1377,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     break;
                 
                 case 'clear':
-                    terminalBody.innerHTML = '';
+                    // [NÂNG CẤP] Khi xóa, giữ lại input ẩn
+                    const hiddenInputHTML = terminalHiddenInput.outerHTML;
+                    terminalBody.innerHTML = hiddenInputHTML;
                     aiChatHistory = []; 
                     await sleep(50);
                     typeToTerminal('Terminal và lịch sử trò chuyện đã được dọn dẹp!', 'system');
@@ -1382,6 +1393,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 case 'matrix':
                     startMatrix();
                     break;
+                
+                case '': // Bỏ qua nếu người dùng chỉ nhấn Enter
+                    break;
 
                 default:
                     typeToTerminal(`Lệnh '${command}' không tồn tại. Gõ 'help' để xem danh sách lệnh.`, 'error');
@@ -1389,86 +1403,93 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
         
-        function updateInputDisplay() {
+        function updateInputDisplay(text) {
             const inputSpan = terminalBody.querySelector('.terminal-input-line .input-text');
             if (inputSpan) {
-                inputSpan.innerHTML = currentInput.replace(/ /g, '&nbsp;');
+                // Hiển thị nội dung từ input ẩn, thay thế space bằng &nbsp; để giữ khoảng trắng
+                inputSpan.innerHTML = text.replace(/ /g, '&nbsp;');
             }
         }
 
         function createNewInputLine() {
-            if (terminalBody.querySelector('.terminal-input-line')) {
-                return;
-            }
+            // Xóa dòng input cũ nếu có
+            const oldInputLine = terminalBody.querySelector('.terminal-input-line');
+            if (oldInputLine) oldInputLine.remove();
+
             const line = document.createElement('div');
             line.classList.add('terminal-line', 'terminal-input-line');
+            // Dòng lệnh hiển thị trên UI
             line.innerHTML = `<span class="prompt-user">caothongdev@portfolio:~$</span><span class="input-text"></span><span class="caret"></span>`;
+            
+            // Thêm vào cuối terminal
             terminalBody.appendChild(line);
             terminalBody.scrollTop = terminalBody.scrollHeight;
-            updateInputDisplay();
-            terminalWindow.focus();
+            
+            // Reset và focus vào input ẩn
+            terminalHiddenInput.value = '';
+            terminalHiddenInput.focus();
+            updateInputDisplay('');
         }
 
-        terminalWindow.addEventListener('click', () => {
-            if (!terminalBody.querySelector('.terminal-input-line')) {
-                createNewInputLine();
-            }
-            terminalWindow.focus();
+        // [NÂNG CẤP] Sự kiện click vào terminal để focus vào input ẩn
+        terminalWindow.addEventListener('click', (e) => {
+            // Chỉ focus nếu click vào vùng trống, không phải link hay phần tử tương tác khác
+            if (e.target.closest('a, button')) return;
+            terminalHiddenInput.focus();
         });
 
-        terminalWindow.addEventListener('keydown', async (e) => {
-            e.stopPropagation();
+        // [NÂNG CẤP] Lấy input từ input ẩn thay vì keydown trên cả window
+        terminalHiddenInput.addEventListener('input', (e) => {
+             if (isAiThinking) {
+                // Ngăn người dùng nhập liệu khi AI đang xử lý
+                e.target.value = '';
+                return;
+             }
+             // Cập nhật giao diện với nội dung của input ẩn
+             updateInputDisplay(e.target.value);
+        });
 
+        // [NÂNG CẤP] Xử lý các phím đặc biệt trên input ẩn
+        terminalHiddenInput.addEventListener('keydown', async (e) => {
             if (e.key === 'Enter') {
+                e.preventDefault();
                 if (isAiThinking) return;
 
-                const commandToRun = currentInput;
-                const trimmedCommand = commandToRun.trim();
+                const commandToRun = terminalHiddenInput.value;
                 const currentInputLine = terminalBody.querySelector('.terminal-input-line');
 
+                // Biến dòng lệnh hiện tại thành dòng lịch sử
                 if (currentInputLine) {
                     currentInputLine.classList.remove('terminal-input-line');
                     const caret = currentInputLine.querySelector('.caret');
                     if (caret) caret.remove();
                 }
                 
-                currentInput = '';
+                // Xử lý lệnh
+                await handleTerminalInput(commandToRun);
 
-                if (trimmedCommand !== '') {
-                    await handleTerminalInput(trimmedCommand);
+                // Tạo dòng lệnh mới (nếu không phải đang chờ AI)
+                if (!isAiThinking) {
+                    createNewInputLine();
                 }
-                createNewInputLine();
-                
-            } else if (e.key === 'Backspace') {
-                currentInput = currentInput.slice(0, -1);
-                updateInputDisplay();
             } else if (e.key === 'ArrowUp') {
                 e.preventDefault();
-                if (commandHistory.length > 0) {
-                    historyIndex = Math.max(0, historyIndex - 1);
-                    currentInput = commandHistory[historyIndex] || '';
-                    updateInputDisplay();
+                if (commandHistory.length > 0 && historyIndex > 0) {
+                    historyIndex--;
+                    terminalHiddenInput.value = commandHistory[historyIndex];
+                    updateInputDisplay(terminalHiddenInput.value);
                 }
             } else if (e.key === 'ArrowDown') {
                 e.preventDefault();
                 if (historyIndex < commandHistory.length - 1) {
                     historyIndex++;
-                    currentInput = commandHistory[historyIndex] || '';
-                    updateInputDisplay();
+                    terminalHiddenInput.value = commandHistory[historyIndex];
+                    updateInputDisplay(terminalHiddenInput.value);
                 } else {
                     historyIndex = commandHistory.length;
-                    currentInput = '';
-                    updateInputDisplay();
+                    terminalHiddenInput.value = '';
+                    updateInputDisplay('');
                 }
-                } else if (e.key === ' ') { 
-        e.preventDefault();     
-        if(isAiThinking) return;
-        currentInput += ' ';
-        updateInputDisplay();
-            } else if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
-                if(isAiThinking) return;
-                currentInput += e.key;
-                updateInputDisplay();
             }
         });
         
@@ -1681,12 +1702,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const tagsContainer = document.getElementById('case-study-modal-tags');
             tagsContainer.innerHTML = '';
-            data.projectTags.split(',').forEach(tag => {
-                const span = document.createElement('span');
-                span.className = 'tag';
-                span.textContent = tag.trim();
-                tagsContainer.appendChild(span);
-            });
+            // Kiểm tra xem projectTags có tồn tại không trước khi split
+            if (data.projectTags) {
+                data.projectTags.split(',').forEach(tag => {
+                    const span = document.createElement('span');
+                    span.className = 'tag';
+                    span.textContent = tag.trim();
+                    tagsContainer.appendChild(span);
+                });
+            }
 
             caseStudyModal.classList.remove('hidden');
             requestAnimationFrame(() => caseStudyModal.classList.add('active'));
