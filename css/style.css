@@ -3890,6 +3890,20 @@ body.menu-hidden .main-nav {
     top: -9999px;
     width: 1px;
     height: 1px;
-    opacity: 0;   /* Hoàn toàn trong suốt */
-    pointer-events: none; /* Không bắt sự kiện chuột/chạm */
+    opacity: 0;
+    pointer-events: none;
+    font-size: 16px !important;
+}
+/* Căn giữa avatar loading trong loading screen */
+#loading-screen .loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh; /* hoặc 100vh nếu muốn giữa màn hình */
+}
+
+#loading-screen .loading-avatar {
+    display: block;
+    margin: 0 auto 20px auto; /* căn giữa và cách dưới 20px */
 }

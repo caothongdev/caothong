@@ -7,42 +7,62 @@
     <title>Hoàng Cao Thống (caothongdev) - Developer & Designer</title>
 
     <!-- Meta Tags for SEO -->
-    <meta name="description" content="Trang web cá nhân của Hoàng Cao Thống (caothongdev) - Developer, Designer. Khám phá các kỹ năng, dự án, bài viết blog và thông tin liên hệ.">
-    <meta name="keywords" content="Hoàng Cao Thống, caothongdev, developer, designer, web developer, personal website, portfolio, lập trình viên, thiết kế web, trang web cá nhân, blog lập trình">
+    <meta name="description"
+        content="Trang web cá nhân của Hoàng Cao Thống (caothongdev) - Developer, Designer. Khám phá các kỹ năng, dự án, bài viết blog và thông tin liên hệ.">
+    <meta name="keywords"
+        content="Hoàng Cao Thống, caothongdev, developer, designer, web developer, personal website, portfolio, lập trình viên, thiết kế web, trang web cá nhân, blog lập trình">
     <meta name="author" content="Hoàng Cao Thống">
     <meta name="theme-color" content="#0D1117" id="theme-color-meta">
 
     <!-- Favicon and Apple Touch Icon -->
-    <link rel="icon" href="assets/favicon-dark.png" type="image/png" id="favicon">
+    <link rel="icon" href="assets/T_favicon.png" type="image/png" id="favicon">
+<link rel="shortcut icon" href="assets/T_favicon.png" type="image/png">
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@700&family=Poppins:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Montserrat:wght@700&family=Poppins:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- ** TailwindCSS CDN ** -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://caothong.dev">
     <meta property="og:title" content="Hoàng Cao Thống (caothongdev) - Developer & Designer">
-    <meta property="og:description" content="Khám phá trang web cá nhân của Hoàng Cao Thống - Developer, Designer. Xem các kỹ năng, dự án, bài viết blog và thông tin liên hệ.">
+    <meta property="og:description"
+        content="Khám phá trang web cá nhân của Hoàng Cao Thống - Developer, Designer. Xem các kỹ năng, dự án, bài viết blog và thông tin liên hệ.">
     <meta property="og:image" content="https://caothong.dev/assets/preview-image.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://caothong.dev">
     <meta property="twitter:title" content="Hoàng Cao Thống (caothongdev) - Developer & Designer">
-    <meta property="twitter:description" content="Khám phá trang web cá nhân của Hoàng Cao Thống - Developer, Designer. Xem các kỹ năng, dự án và thông tin liên hệ.">
+    <meta property="twitter:description"
+        content="Khám phá trang web cá nhân của Hoàng Cao Thống - Developer, Designer. Xem các kỹ năng, dự án và thông tin liên hệ.">
     <meta property="twitter:image" content="https://caothong.dev/assets/preview-image.png">
 
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* Thêm một vài tùy chỉnh nhỏ để hoạt động tốt với Tailwind */
+        .content-section {
+            background-color: #161b22;
+            /* Màu nền gốc của section */
+        }
+    </style>
 </head>
 
-<body data-focus-mode="false">
+<body data-focus-mode="false" class="bg-gray-900 text-gray-300">
 
     <!-- Background Effects & Elements -->
     <canvas id="matrix-canvas"></canvas>
@@ -68,7 +88,8 @@
     <div id="lobby-screen" class="screen lobby-background">
         <div class="lobby-content">
             <div class="lobby-icon">
-                <img src="assets/rem.gif" alt="Biểu tượng trang chờ của caothongdev" class="loading-avatar" loading="lazy">
+                <img src="assets/rem.gif" alt="Biểu tượng trang chờ của caothongdev" class="loading-avatar"
+                    loading="lazy">
             </div>
             <h2 id="lobby-greeting">Chào mừng bạn!</h2>
             <p id="lobby-slogan" class="typing-effect-target">...</p>
@@ -84,27 +105,32 @@
             <a href="#" class="nav-logo">caothong.dev</a>
             <div class="nav-links">
                 <a href="#about" class="nav-link">Giới thiệu</a>
+                <a href="#services" class="nav-link">Dịch vụ</a>
                 <a href="#featured-projects" class="nav-link">Dự án</a>
                 <a href="#skills" class="nav-link">Kỹ năng</a>
                 <a href="#roadmap" class="nav-link">Lộ trình</a>
-                <a href="#blog" class="nav-link">Blog</a>
                 <a href="#contact" class="nav-link">Liên hệ</a>
             </div>
             <div class="nav-controls">
-                <button id="back-to-lobby-btn" class="nav-control-btn" aria-label="Quay lại màn hình chờ" title="Quay lại màn hình chờ">
+                <button id="back-to-lobby-btn" class="nav-control-btn" aria-label="Quay lại màn hình chờ"
+                    title="Quay lại màn hình chờ">
                     <i class="fas fa-home"></i>
                 </button>
-                <button id="focus-mode-toggle" class="nav-control-btn" aria-label="Bật chế độ tập trung" title="Chế độ tập trung">
+                <button id="focus-mode-toggle" class="nav-control-btn" aria-label="Bật chế độ tập trung"
+                    title="Chế độ tập trung">
                     <i class="fas fa-eye"></i>
                 </button>
-                <button id="command-palette-toggle" class="nav-control-btn" aria-label="Mở bảng lệnh" title="Bảng lệnh (Ctrl+K)">
+                <button id="command-palette-toggle" class="nav-control-btn" aria-label="Mở bảng lệnh"
+                    title="Bảng lệnh (Ctrl+K)">
                     <i class="fas fa-terminal"></i>
                 </button>
-                <button id="cursor-toggle-btn" class="nav-control-btn" aria-label="Tắt hiệu ứng con trỏ" aria-pressed="true" title="Bật/tắt hiệu ứng con trỏ">
+                <button id="cursor-toggle-btn" class="nav-control-btn" aria-label="Tắt hiệu ứng con trỏ"
+                    aria-pressed="true" title="Bật/tắt hiệu ứng con trỏ">
                     <i class="fas fa-mouse-pointer cursor-icon-on"></i>
                     <i class="fas fa-ban cursor-icon-off" style="display: none;"></i>
                 </button>
-                <button id="theme-toggle-btn" class="nav-control-btn" aria-label="Chuyển đổi giao diện" title="Đổi giao diện">
+                <button id="theme-toggle-btn" class="nav-control-btn" aria-label="Chuyển đổi giao diện"
+                    title="Đổi giao diện">
                     <i class="fas fa-sun theme-icon-sun"></i>
                     <i class="fas fa-moon theme-icon-moon" style="display: none;"></i>
                 </button>
@@ -122,7 +148,8 @@
             <!-- Profile Header -->
             <header class="profile-header">
                 <div class="profile-avatar-container" data-clicks="0" title="Click vào đây thử xem!">
-                    <img src="assets/rem.gif" alt="Ảnh đại diện chính của Hoàng Cao Thống" class="profile-avatar lightbox-trigger" loading="lazy">
+                    <img src="assets/rem.gif" alt="Ảnh đại diện chính của Hoàng Cao Thống"
+                        class="profile-avatar lightbox-trigger" loading="lazy">
                     <div class="avatar-glow-ring"></div>
                 </div>
                 <div class="profile-details">
@@ -133,7 +160,8 @@
                     <p class="profile-tagline typing-effect-target">Developer | Designer | Dream Chaser</p>
                     <div class="profile-meta">
                         <span><i class="fas fa-map-marker-alt icon"></i> Vietnam / Can Tho</span>
-                        <a href="https://github.com/caothongdev" target="_blank" rel="noopener noreferrer me" title="Truy cập GitHub của caothongdev">
+                        <a href="https://github.com/caothongdev" target="_blank" rel="noopener noreferrer me"
+                            title="Truy cập GitHub của caothongdev">
                             <i class="fab fa-github icon"></i> My Github
                         </a>
                     </div>
@@ -149,8 +177,10 @@
             <section id="about" class="content-section" aria-labelledby="about-heading">
                 <h2 id="about-heading">Giới thiệu 👨‍💻</h2>
                 <p class="text-secondary mb-3">
-                    Xin chào! Tôi là Thống, một lập trình viên và nhà thiết kế với niềm đam mê tạo ra những sản phẩm kỹ thuật số đẹp mắt, hữu ích và mang lại trải nghiệm tuyệt vời cho người dùng.
-                    Màn hình Terminal bên dưới là nơi bạn có thể "giao tiếp" trực tiếp với trang web này, gõ `help` để bắt đầu nhé!
+                    Xin chào! Tôi là Thống, một lập trình viên và nhà thiết kế với niềm đam mê tạo ra những sản phẩm kỹ
+                    thuật số đẹp mắt, hữu ích và mang lại trải nghiệm tuyệt vời cho người dùng.
+                    Màn hình Terminal bên dưới là nơi bạn có thể "giao tiếp" trực tiếp với trang web này, gõ `help` để
+                    bắt đầu nhé!
                 </p>
                 <div class="terminal-window" id="terminal" tabindex="0">
                     <div class="terminal-header">
@@ -162,7 +192,79 @@
                         <div class="terminal-title">caothongdev@portfolio: ~</div>
                     </div>
                     <div class="terminal-body" id="terminal-body">
-                        <input type="text" id="terminal-hidden-input" aria-label="Terminal input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                        <input type="text" id="terminal-hidden-input" aria-label="Terminal input" autocomplete="off"
+                            autocorrect="off" autocapitalize="off" spellcheck="false">
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Services Section -->
+            <section id="services" class="content-section" aria-labelledby="services-heading">
+                <h2 id="services-heading" class="text-3xl font-bold text-white mb-12 text-center">Dịch vụ của tôi 🛠️
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service Card 1: Web Development -->
+                    <div
+                        class="bg-gray-800 rounded-lg p-8 border border-gray-700 hover:border-blue-500 hover:scale-105 transition-all duration-300 shadow-lg">
+                        <div class="text-blue-400 mb-4">
+                            <i class="fas fa-code text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Phát triển Web</h3>
+                        <p class="text-gray-400 mb-4">Xây dựng các trang web và ứng dụng web hiện đại, tốc độ cao và tối
+                            ưu hóa cho mọi thiết bị.</p>
+                        <ul class="text-gray-300 space-y-2">
+                            <li class="flex items-start"><i
+                                    class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i><span>Website doanh nghiệp,
+                                    portfolio, e-commerce.</span></li>
+                            <li class="flex items-start"><i
+                                    class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i><span>Backend mạnh mẽ với
+                                    Node.js, Python.</span></li>
+                            <li class="flex items-start"><i
+                                    class="fas fa-check-circle text-blue-400 mt-1 mr-2"></i><span>Tối ưu hóa SEO và hiệu
+                                    suất.</span></li>
+                        </ul>
+                    </div>
+                    <!-- Service Card 2: UI/UX Design -->
+                    <div
+                        class="bg-gray-800 rounded-lg p-8 border border-gray-700 hover:border-purple-500 hover:scale-105 transition-all duration-300 shadow-lg">
+                        <div class="text-purple-400 mb-4">
+                            <i class="fas fa-palette text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Thiết kế UI/UX</h3>
+                        <p class="text-gray-400 mb-4">Tạo ra các giao diện người dùng đẹp mắt, trực quan và mang lại
+                            trải nghiệm tuyệt vời.</p>
+                        <ul class="text-gray-300 space-y-2">
+                            <li class="flex items-start"><i
+                                    class="fas fa-check-circle text-purple-400 mt-1 mr-2"></i><span>Thiết kế giao diện
+                                    trên Figma.</span></li>
+                            <li class="flex items-start"><i
+                                    class="fas fa-check-circle text-purple-400 mt-1 mr-2"></i><span>Xây dựng Design
+                                    System.</span></li>
+                            <li class="flex items-start"><i
+                                    class="fas fa-check-circle text-purple-400 mt-1 mr-2"></i><span>Tập trung vào trải
+                                    nghiệm người dùng.</span></li>
+                        </ul>
+                    </div>
+                    <!-- Service Card 3: Bot & Automation -->
+                    <div
+                        class="bg-gray-800 rounded-lg p-8 border border-gray-700 hover:border-green-500 hover:scale-105 transition-all duration-300 shadow-lg">
+                        <div class="text-green-400 mb-4">
+                            <i class="fas fa-robot text-4xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Bot & Tự động hóa</h3>
+                        <p class="text-gray-400 mb-4">Phát triển các loại bot (Discord, Telegram) và công cụ tự động hóa
+                            để tối ưu hóa công việc.</p>
+                        <ul class="text-gray-300 space-y-2">
+                            <li class="flex items-start"><i
+                                    class="fas fa-check-circle text-green-400 mt-1 mr-2"></i><span>Bot Discord tích hợp
+                                    AI, quản lý cộng đồng.</span></li>
+                            <li class="flex items-start"><i
+                                    class="fas fa-check-circle text-green-400 mt-1 mr-2"></i><span>Tool automation bằng
+                                    Python/Selenium.</span></li>
+                            <li class="flex items-start"><i
+                                    class="fas fa-check-circle text-green-400 mt-1 mr-2"></i><span>Giải pháp tự động hóa
+                                    theo yêu cầu.</span></li>
+                        </ul>
                     </div>
                 </div>
             </section>
@@ -178,20 +280,23 @@
                             <div class="project-image-container">
                                 <picture>
                                     <source srcset="assets/enc.png" type="image/webp">
-                                    <img src="assets/enc.png" alt="EnC Store - Dịch vụ tài khoản Premium và cày game uy tín" class="featured-link-thumbnail lightbox-trigger" loading="lazy">
+                                    <img src="assets/enc.png"
+                                        alt="EnC Store - Dịch vụ tài khoản Premium và cày game uy tín"
+                                        class="featured-link-thumbnail lightbox-trigger" loading="lazy">
                                 </picture>
                             </div>
                             <h3>EnC Store</h3>
-                            <p>Cửa hàng cung cấp tài khoản dịch vụ số và game với giá tốt, bảo hành uy tín và chuyên nghiệp.</p>
+                            <p>Cửa hàng cung cấp tài khoản dịch vụ số và game với giá tốt, bảo hành uy tín và chuyên
+                                nghiệp.</p>
                             <div class="featured-link-actions">
-                                <a href="#" class="btn btn-primary case-study-trigger" 
-                                   data-project-title="EnC Store - Dịch vụ số uy tín"
-                                   data-project-image="assets/store.webp"
-                                   data-project-role="Lead Developer, UI/UX Designer"
-                                   data-project-description="EnC Store là dự án thương mại điện tử chuyên cung cấp các tài khoản dịch vụ số (Netflix, Spotify,...) và dịch vụ game. Mục tiêu là tạo ra một nền tảng mua sắm nhanh chóng, an toàn và có hệ thống quản lý đơn hàng hiệu quả."
-                                   data-project-challenges="Xây dựng hệ thống thanh toán tự động an toàn. Giao diện thân thiện, dễ sử dụng trên cả máy tính và di động. Tối ưu hóa tốc độ tải trang để giữ chân khách hàng."
-                                   data-project-solution="Tích hợp API của các cổng thanh toán uy tín. Áp dụng Responsive Design và Mobile-First. Sử dụng kỹ thuật lazy loading cho hình ảnh và tối ưu hóa mã nguồn."
-                                >Ghé Thăm</a>
+                                <a href="#" class="btn btn-primary case-study-trigger"
+                                    data-project-title="EnC Store - Dịch vụ số uy tín"
+                                    data-project-image="assets/store.webp"
+                                    data-project-role="Lead Developer, UI/UX Designer"
+                                    data-project-description="EnC Store là dự án thương mại điện tử chuyên cung cấp các tài khoản dịch vụ số (Netflix, Spotify,...) và dịch vụ game. Mục tiêu là tạo ra một nền tảng mua sắm nhanh chóng, an toàn và có hệ thống quản lý đơn hàng hiệu quả."
+                                    data-project-challenges="Xây dựng hệ thống thanh toán tự động an toàn. Giao diện thân thiện, dễ sử dụng trên cả máy tính và di động. Tối ưu hóa tốc độ tải trang để giữ chân khách hàng."
+                                    data-project-solution="Tích hợp API của các cổng thanh toán uy tín. Áp dụng Responsive Design và Mobile-First. Sử dụng kỹ thuật lazy loading cho hình ảnh và tối ưu hóa mã nguồn.">Ghé
+                                    Thăm</a>
                                 <a href="https://www.facebook.com/caothongdev"></a>
                             </div>
                         </article>
@@ -201,20 +306,22 @@
                             <div class="project-image-container">
                                 <picture>
                                     <source srcset="assets/discord_project.png" type="image/webp">
-                                    <img src="assets/discord_project.png" alt="Mô tả dự án Bot Discord AI" class="featured-link-thumbnail lightbox-trigger" loading="lazy">
+                                    <img src="assets/discord_project.png" alt="Mô tả dự án Bot Discord AI"
+                                        class="featured-link-thumbnail lightbox-trigger" loading="lazy">
                                 </picture>
                             </div>
                             <h3>AI Discord Bot</h3>
-                            <p>Bot Discord thông minh tích hợp AI, hỗ trợ quản lý server, cung cấp tiện ích và tự động hóa các tác vụ.</p>
+                            <p>Bot Discord thông minh tích hợp AI, hỗ trợ quản lý server, cung cấp tiện ích và tự động
+                                hóa các tác vụ.</p>
                             <div class="featured-link-actions">
                                 <a href="#" class="btn btn-primary case-study-trigger"
-                                   data-project-title="AI Discord Bot - Trợ lý đa năng"
-                                   data-project-image="assets/discord_project.png"
-                                   data-project-role="AI Engineer, Backend Developer"
-                                   data-project-description="Một bot Discord mạnh mẽ được xây dựng với mục tiêu tự động hóa việc quản lý máy chủ, tăng tương tác người dùng và cung cấp các tính năng giải trí, tiện ích thông qua AI."
-                                   data-project-challenges="Xử lý lượng lớn yêu cầu đồng thời từ người dùng. Tích hợp các mô hình AI một cách hiệu quả để trả lời câu hỏi và tạo nội dung. Đảm bảo bot hoạt động ổn định 24/7."
-                                   data-project-solution="Sử dụng kiến trúc bất đồng bộ (asynchronous) của Python. Kết nối đến các API của OpenAI và các mô hình ngôn ngữ khác. Triển khai bot trên nền tảng Docker để dễ dàng quản lý và mở rộng."
-                                >Xem Case Study</a>
+                                    data-project-title="AI Discord Bot - Trợ lý đa năng"
+                                    data-project-image="assets/discord_project.png"
+                                    data-project-role="AI Engineer, Backend Developer"
+                                    data-project-description="Một bot Discord mạnh mẽ được xây dựng với mục tiêu tự động hóa việc quản lý máy chủ, tăng tương tác người dùng và cung cấp các tính năng giải trí, tiện ích thông qua AI."
+                                    data-project-challenges="Xử lý lượng lớn yêu cầu đồng thời từ người dùng. Tích hợp các mô hình AI một cách hiệu quả để trả lời câu hỏi và tạo nội dung. Đảm bảo bot hoạt động ổn định 24/7."
+                                    data-project-solution="Sử dụng kiến trúc bất đồng bộ (asynchronous) của Python. Kết nối đến các API của OpenAI và các mô hình ngôn ngữ khác. Triển khai bot trên nền tảng Docker để dễ dàng quản lý và mở rộng.">Xem
+                                    Case Study</a>
                             </div>
                         </article>
 
@@ -223,234 +330,313 @@
                             <div class="project-image-container">
                                 <picture>
                                     <source srcset="assets/portfolio.png" type="image/webp">
-                                    <img src="assets/portfolio.png" alt="Mô tả dự án Website Cá Nhân Portfolio" class="featured-link-thumbnail lightbox-trigger" loading="lazy">
+                                    <img src="assets/portfolio.png" alt="Mô tả dự án Website Cá Nhân Portfolio"
+                                        class="featured-link-thumbnail lightbox-trigger" loading="lazy">
                                 </picture>
                             </div>
                             <h3>Portfolio Cá Nhân</h3>
-                            <p>Chính là trang web bạn đang xem, được xây dựng để giới thiệu bản thân, kỹ năng và các dự án đã thực hiện.</p>
+                            <p>Chính là trang web bạn đang xem, được xây dựng để giới thiệu bản thân, kỹ năng và các dự
+                                án đã thực hiện.</p>
                             <div class="featured-link-actions">
-                                <a href="https://github.com/caothongdev/my-portfolio" target="_blank" rel="noopener noreferrer" class="btn btn-secondary"><i class="fab fa-github"></i> GitHub</a>
+                                <a href="https://github.com/caothongdev/my-portfolio" target="_blank"
+                                    rel="noopener noreferrer" class="btn btn-secondary"><i class="fab fa-github"></i>
+                                    GitHub</a>
                             </div>
                         </article>
 
                     </div>
-                    <button class="carousel-control prev" aria-label="Dự án trước"><i class="fas fa-chevron-left"></i></button>
-                    <button class="carousel-control next" aria-label="Dự án tiếp theo"><i class="fas fa-chevron-right"></i></button>
+                    <button class="carousel-control prev" aria-label="Dự án trước"><i
+                            class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-control next" aria-label="Dự án tiếp theo"><i
+                            class="fas fa-chevron-right"></i></button>
                 </div>
             </section>
 
-            <!-- 3. Skills Section -->
+            <!-- 3. Skills Section (UPDATED WITH TAILWINDCSS AND ICONS) -->
             <section id="skills" class="content-section" aria-labelledby="skills-heading">
-                <h2 id="skills-heading">Kỹ năng & Công nghệ 💡</h2>
-                <p class="text-secondary mb-3">Di chuột qua một kỹ năng để xem chi tiết về mức độ thành thạo và các dự án đã áp dụng.</p>
-                <div class="skills-grid">
-                    <div class="skill-category">
-                        <h3><i class="fas fa-palette skill-category-icon"></i> UI/UX Design</h3>
-                        <ul class="skill-tags">
-                            <li data-proficiency="80" data-projects="Portfolio Cá Nhân, Enc Store">Figma</li>
-                            <li data-proficiency="75" data-projects="Portfolio Cá Nhân, Enc Store">System Making</li>
-                        </ul>
+                <h2 id="skills-heading" class="text-3xl font-bold text-white mb-4 text-center">Kỹ năng &amp; Công nghệ
+                    💡</h2>
+                <p class="text-gray-400 mb-12 text-center max-w-2xl mx-auto">Đây là những công nghệ và công cụ tôi đam
+                    mê và sử dụng hàng ngày để biến ý tưởng thành hiện thực.</p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-8 text-center">
+
+                    <!-- Skill Items -->
+                    <div class="flex flex-col items-center justify-center p-4 group" title="Figma">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+                            alt="Figma" class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">Figma</span>
                     </div>
-                    <div class="skill-category">
-                        <h3><i class="fas fa-code skill-category-icon"></i> Web Development</h3>
-                        <ul class="skill-tags">
-                            <li data-proficiency="85" data-projects="AI Discord Bot, Enc Store">Node.js</li>
-                            <li data-proficiency="70" data-projects="AI Discord Bot">TypeScript</li>
-                            <li data-proficiency="90" data-projects="Portfolio Cá Nhân, Enc Store">JavaScript</li>
-                            <li data-proficiency="95" data-projects="Portfolio Cá Nhân">CSS3</li>
-                            <li data-proficiency="95" data-projects="Portfolio Cá Nhân">HTML5</li>
-                        </ul>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="HTML5">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                            alt="HTML5" class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">HTML5</span>
                     </div>
-                    <div class="skill-category">
-                        <h3><i class="fas fa-laptop-code skill-category-icon"></i> Programming Languages</h3>
-                        <ul class="skill-tags">
-                            <li data-proficiency="90" data-projects="AI Discord Bot, Automation Tools">Python</li>
-                            <li data-proficiency="60" data-projects="University Projects">C/C++</li>
-                            <li data-proficiency="75" data-projects="Enc Store">SQL (MySQL)</li>
-                        </ul>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="CSS3">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3"
+                            class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">CSS3</span>
                     </div>
-                    <div class="skill-category">
-                        <h3><i class="fas fa-tools skill-category-icon"></i> Tools & Platforms</h3>
-                        <ul class="skill-tags">
-                            <li data-proficiency="95" data-projects="All Projects">VSCode</li>
-                            <li data-proficiency="90" data-projects="All Projects">Git & GitHub</li>
-                            <li data-proficiency="70" data-projects="Deployments">Linux</li>
-                            <li data-proficiency="65" data-projects="AI Discord Bot">Docker</li>
-                        </ul>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="JavaScript">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                            alt="JavaScript"
+                            class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">JavaScript</span>
                     </div>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="TypeScript">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+                            alt="TypeScript"
+                            class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">TypeScript</span>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="Node.js">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                            alt="Node.js"
+                            class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">Node.js</span>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="Python">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                            alt="Python" class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">Python</span>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="C/C++">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg"
+                            alt="C++" class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">C/C++</span>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="MySQL">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original-wordmark.svg"
+                            alt="MySQL" class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">SQL
+                            (MySQL)</span>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="Git & GitHub">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"
+                            class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">Git/GitHub</span>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="Docker">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+                            alt="Docker" class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">Docker</span>
+                    </div>
+
+                    <div class="flex flex-col items-center justify-center p-4 group" title="VSCode">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"
+                            alt="VSCode" class="w-16 h-16 mb-3 transition-transform duration-300 group-hover:scale-110">
+                        <span
+                            class="text-gray-300 font-medium group-hover:text-white transition-colors duration-300">VSCode</span>
+                    </div>
+
                 </div>
             </section>
 
-            <!-- 4. Roadmap Section -->
+
+            <!-- 4. Roadmap Section (UPDATED WITH TAILWINDCSS TIMELINE) -->
             <section id="roadmap" class="content-section" aria-labelledby="roadmap-heading">
-                <h2 id="roadmap-heading">Hành Trình Chinh Phục 🗺️</h2>
-                <div class="conquest-grid">
-                    <div class="phase-card done">
-                        <div class="phase-header">
-                            <div class="phase-icon"><i class="fas fa-flag"></i></div>
-                            <div class="phase-title">
-                                <h3>Giai Đoạn 1: Nền Tảng</h3>
-                                <span>T6 2025 - Đã Hoàn Thành</span>
-                            </div>
-                        </div>
-                        <div class="phase-body">
-                            <p><strong>Mục tiêu:</strong> Xây dựng và ra mắt Portfolio cá nhân phiên bản đầu tiên.</p>
-                            <ul>
-                                <li><i class="fas fa-check-circle"></i> Hoàn thiện giao diện & tính năng cốt lõi.</li>
-                                <li><i class="fas fa-check-circle"></i> Tích hợp hệ thống thành tựu & Easter Eggs.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="phase-card in-progress">
-                        <div class="phase-header">
-                            <div class="phase-icon"><i class="fas fa-rocket"></i></div>
-                            <div class="phase-title">
-                                <h3>Giai Đoạn 2: Mở Rộng</h3>
-                                <span>T6 2025 - Đang Thực Hiện</span>
-                            </div>
-                        </div>
-                        <div class="phase-body">
-                            <p><strong>Mục tiêu:</strong> Nâng cấp các dự án hiện có và khám phá công nghệ mới.</p>
-                            <ul>
-                                <li><i class="fas fa-spinner fa-spin"></i> Phát triển Bot Discord V2 với AI nâng cao.</li>
-                                <li><i class="fas fa-book-open"></i> Bắt đầu nghiên cứu về Golang.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="phase-card planned">
-                        <div class="phase-header">
-                            <div class="phase-icon"><i class="fas fa-compass"></i></div>
-                            <div class="phase-title">
-                                <h3>Giai Đoạn 3: Khám Phá</h3>
-                                <span>T7 2025 - Dự Kiến</span>
-                            </div>
-                        </div>
-                        <div class="phase-body">
-                            <p><strong>Mục tiêu:</strong> Áp dụng kiến thức mới vào các dự án thực tế.</p>
-                            <ul>
-                                <li><i class="far fa-circle"></i> Xây dựng một microservice bằng Golang.</li>
-                                <li><i class="far fa-circle"></i> Tìm hiểu cơ bản về CI/CD.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="phase-card planned">
-                        <div class="phase-header">
-                            <div class="phase-icon"><i class="fas fa-lightbulb"></i></div>
-                            <div class="phase-title">
-                                <h3>Giai Đoạn 4: Sáng Tạo</h3>
-                                <span>T7 2025 - Tầm Nhìn</span>
-                            </div>
-                        </div>
-                        <div class="phase-body">
-                            <p><strong>Mục tiêu:</strong> Phát triển sản phẩm độc lập.</p>
-                            <ul>
-                                <li><i class="far fa-circle"></i> Lên ý tưởng và phát triển một sản phẩm SaaS nhỏ.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                <h2 id="roadmap-heading" class="text-3xl font-bold text-white mb-12 text-center">Hành Trình Chinh Phục
+                    🗺️</h2>
+                <div class="relative container mx-auto px-6 flex flex-col space-y-8">
+                    <div class="absolute z-0 w-2 h-full bg-gray-700 shadow-md inset-0 left-1/2 -translate-x-1/2"></div>
 
-            <!-- 5. Blog Section -->
-            <section id="blog" class="content-section" aria-labelledby="blog-heading">
-                <h2 id="blog-heading">Góc chia sẻ & Blog 📝</h2>
-                <div class="blog-grid">
-                    <a href="blog-post-1.html" class="blog-card-link">
-                        <article class="blog-card">
-                           <picture>
-                                <source srcset="https://placehold.co/600x400/0D1117/c9d1d9.webp?text=Portfolio" type="image/webp">
-                                <img src="https://placehold.co/600x400/0D1117/c9d1d9.png?text=Portfolio" alt="Hành trình tôi xây dựng trang web này" class="blog-card-image" loading="lazy">
-                           </picture>
-                            <div class="blog-card-content">
-                                <span class="blog-card-category">Case Study</span>
-                                <h3 class="blog-card-title">Behind the Scenes: Tôi đã xây dựng trang Portfolio này như thế nào?</h3>
-                                <p class="blog-card-excerpt">Cùng nhìn lại quá trình từ lên ý tưởng, thiết kế trên Figma, cho đến khi hoàn thiện trang web cá nhân với các hiệu ứng và tính năng độc đáo.</p>
-                                <span class="blog-card-readmore">Đọc thêm <i class="fas fa-arrow-right"></i></span>
+                    <!-- Roadmap Item 1: Done -->
+                    <div class="relative z-10">
+                        <div class="timeline-marker bg-green-500 shadow-lg shadow-green-500/50">
+                            <i class="fas fa-flag text-white"></i>
+                        </div>
+                        <div class="timeline-content md:ml-auto md:pl-16">
+                            <div class="bg-gray-800 border border-green-500/50 rounded-lg shadow-xl p-6">
+                                <span class="font-bold text-sm text-green-400">T6 2025 - Đã Hoàn Thành</span>
+                                <h3 class="text-xl font-bold text-white mt-1 mb-2">Giai Đoạn 1: Nền Tảng</h3>
+                                <p class="text-gray-400 mb-4"><strong>Mục tiêu:</strong> Xây dựng và ra mắt Portfolio cá
+                                    nhân phiên bản đầu tiên.</p>
+                                <ul class="list-none space-y-2 text-gray-300">
+                                    <li class="flex items-center"><i
+                                            class="fas fa-check-circle text-green-400 mr-2"></i>Hoàn thiện giao diện &
+                                        tính năng cốt lõi.</li>
+                                    <li class="flex items-center"><i
+                                            class="fas fa-check-circle text-green-400 mr-2"></i>Tích hợp hệ thống thành
+                                        tựu & Easter Eggs.</li>
+                                </ul>
                             </div>
-                        </article>
-                    </a>
-                    <a href="blog-post-2.html" class="blog-card-link">
-                        <article class="blog-card">
-                           <picture>
-                                <source srcset="https://placehold.co/600x400/0D1117/c9d1d9.webp?text=VSCode" type="image/webp">
-                                <img src="https://placehold.co/600x400/0D1117/c9d1d9.png?text=VSCode" alt="5 extensions VSCode" class="blog-card-image" loading="lazy">
-                           </picture>
-                            <div class="blog-card-content">
-                                <span class="blog-card-category">Tools</span>
-                                <h3 class="blog-card-title">5 Extension VSCode 'Cứu Cánh' cho Lập trình viên JavaScript</h3>
-                                <p class="blog-card-excerpt">Tổng hợp 5 extension không thể thiếu giúp tăng tốc độ code, debug hiệu quả và giữ cho code của bạn luôn sạch đẹp.</p>
-                                <span class="blog-card-readmore">Đọc thêm <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Roadmap Item 2: In Progress -->
+                    <div class="relative z-10">
+                        <div class="timeline-marker bg-blue-500 shadow-lg shadow-blue-500/50 animate-pulse">
+                            <i class="fas fa-rocket text-white"></i>
+                        </div>
+                        <div class="timeline-content md:mr-auto md:pr-16 text-right">
+                            <div class="bg-gray-800 border border-blue-500/50 rounded-lg shadow-xl p-6">
+                                <span class="font-bold text-sm text-blue-400">T6 2025 - Đang Thực Hiện</span>
+                                <h3 class="text-xl font-bold text-white mt-1 mb-2">Giai Đoạn 2: Mở Rộng</h3>
+                                <p class="text-gray-400 mb-4"><strong>Mục tiêu:</strong> Nâng cấp các dự án hiện có và
+                                    khám phá công nghệ mới.</p>
+                                <ul class="list-none space-y-2 text-gray-300">
+                                    <li class="flex items-center justify-end"><i
+                                            class="fas fa-spinner fa-spin text-blue-400 mr-2"></i>Phát triển Bot Discord
+                                        V2 với AI nâng cao.</li>
+                                    <li class="flex items-center justify-end"><i
+                                            class="fas fa-book-open text-blue-400 mr-2"></i>Bắt đầu nghiên cứu về
+                                        Golang.</li>
+                                </ul>
                             </div>
-                        </article>
-                    </a>
-                    <a href="blog-post-3.html" class="blog-card-link">
-                        <article class="blog-card">
-                           <picture>
-                                <source srcset="https://placehold.co/600x400/0D1117/c9d1d9.webp?text=Python" type="image/webp">
-                                <img src="https://placehold.co/600x400/0D1117/c9d1d9.png?text=Python" alt="Tự động hóa với Python" class="blog-card-image" loading="lazy">
-                           </picture>
-                            <div class="blog-card-content">
-                                <span class="blog-card-category">Tutorial</span>
-                                <h3 class="blog-card-title">Xây Dựng Tool Tự Động Hóa Đầu Tiên với Python và Selenium</h3>
-                                <p class="blog-card-excerpt">Hướng dẫn từng bước để tạo một công cụ tự động hóa đơn giản, giúp bạn tiết kiệm thời gian cho các công việc lặp đi lặp lại hàng ngày.</p>
-                                <span class="blog-card-readmore">Đọc thêm <i class="fas fa-arrow-right"></i></span>
+                        </div>
+                    </div>
+
+                    <!-- Roadmap Item 3: Planned -->
+                    <div class="relative z-10">
+                        <div class="timeline-marker bg-gray-600 shadow-lg">
+                            <i class="fas fa-compass text-white"></i>
+                        </div>
+                        <div class="timeline-content md:ml-auto md:pl-16">
+                            <div class="bg-gray-800 border border-gray-600/50 rounded-lg shadow-xl p-6">
+                                <span class="font-bold text-sm text-gray-400">T7 2025 - Dự Kiến</span>
+                                <h3 class="text-xl font-bold text-white mt-1 mb-2">Giai Đoạn 3: Khám Phá</h3>
+                                <p class="text-gray-400 mb-4"><strong>Mục tiêu:</strong> Áp dụng kiến thức mới vào các
+                                    dự án thực tế.</p>
+                                <ul class="list-none space-y-2 text-gray-300">
+                                    <li class="flex items-center"><i class="far fa-circle text-gray-400 mr-2"></i>Xây
+                                        dựng một microservice bằng Golang.</li>
+                                    <li class="flex items-center"><i class="far fa-circle text-gray-400 mr-2"></i>Tìm
+                                        hiểu cơ bản về CI/CD.</li>
+                                </ul>
                             </div>
-                        </article>
-                    </a>
+                        </div>
+                    </div>
+
+                    <!-- Roadmap Item 4: Vision -->
+                    <div class="relative z-10">
+                        <div class="timeline-marker bg-gray-600 shadow-lg">
+                            <i class="fas fa-lightbulb text-white"></i>
+                        </div>
+                        <div class="timeline-content md:mr-auto md:pr-16 text-right">
+                            <div class="bg-gray-800 border border-gray-600/50 rounded-lg shadow-xl p-6">
+                                <span class="font-bold text-sm text-gray-400">T7 2025 - Tầm Nhìn</span>
+                                <h3 class="text-xl font-bold text-white mt-1 mb-2">Giai Đoạn 4: Sáng Tạo</h3>
+                                <p class="text-gray-400 mb-4"><strong>Mục tiêu:</strong> Phát triển sản phẩm độc lập.
+                                </p>
+                                <ul class="list-none space-y-2 text-gray-300">
+                                    <li class="flex items-center justify-end"><i
+                                            class="far fa-circle text-gray-400 mr-2"></i>Lên ý tưởng và phát triển một
+                                        sản phẩm SaaS nhỏ.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
+                <!-- Custom CSS for Timeline -->
+                <style>
+                    .timeline-content {
+                        width: 100%;
+                    }
+
+                    @media (min-width: 768px) {
+                        .timeline-content {
+                            width: 50%;
+                        }
+                    }
+
+                    .timeline-marker {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 3rem;
+                        height: 3rem;
+                        border-radius: 50%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        z-index: 1;
+                        border: 4px solid #1f2937;
+                        /* bg-gray-800 */
+                    }
+                </style>
             </section>
 
             <!-- 6. Testimonials Section -->
             <section id="testimonials" class="content-section" aria-labelledby="testimonials-heading">
-                <h2 id="testimonials-heading">Khách hàng & Mọi người nói gì 💬</h2>
-                <div class="testimonials-carousel-wrapper">
-                    <div class="testimonials-grid">
-                        <article class="testimonial-item">
-                            <img src="assets/sunidea.jpg" alt="Ảnh đại diện của Sun Idea" class="testimonial-avatar" loading="lazy">
-                            <div class="testimonial-content">
-                                <blockquote>
-                                    <p>"Dịch vụ ở Enc Store rất nhanh và uy tín. Mình mua Google One được hỗ trợ nhiệt tình, giá lại tốt nữa."</p>
-                                </blockquote>
-                                <cite>
-                                    <strong>Sun Idea</strong><br>
-                                    <span>Khách hàng EnC Store</span>
-                                </cite>
-                            </div>
-                        </article>
-                        <article class="testimonial-item">
-                            <img src="assets/vutran.jpg" alt="Ảnh đại diện của Vu Tran" class="testimonial-avatar" loading="lazy">
-                            <div class="testimonial-content">
-                                <blockquote>
-                                    <p>"Thiết kế website rất đẹp, nếu có dịp mình xin ủng hộ tiếp!"</p>
-                                </blockquote>
-                                <cite>
-                                    <strong>Vu Tran</strong><br>
-                                    <span>Khách hàng Thiết kế Web</span>
-                                </cite>
-                            </div>
-                        </article>
-                        <article class="testimonial-item">
-                            <img src="assets/tmie_pile.jpg" alt="Ảnh đại diện của Tmie Pile" class="testimonial-avatar" loading="lazy">
-                            <div class="testimonial-content">
-                                <blockquote>
-                                    <p>"Rất hài lòng với sự chuyên nghiệp và hỗ trợ nhanh chóng từ caothongdev."</p>
-                                </blockquote>
-                                <cite>
-                                    <strong>Tmie Pile</strong><br>
-                                    <span>Khách hàng thứ N</span>
-                                </cite>
-                            </div>
-                        </article>
+                <h2 id="testimonials-heading" class="text-3xl font-bold text-white mb-12 text-center">Khách hàng & Mọi
+                    người nói gì 💬</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Testimonial Card 1 -->
+                    <div
+                        class="bg-gray-800 p-8 rounded-xl shadow-lg relative border border-gray-700 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="absolute top-0 left-8 transform -translate-y-1/2">
+                            <img src="assets/sunidea.jpg" alt="Ảnh đại diện của Sun Idea"
+                                class="w-20 h-20 rounded-full border-4 border-gray-800 shadow-md">
+                        </div>
+                        <i class="fas fa-quote-left text-blue-500 text-3xl absolute top-8 right-8 opacity-20"></i>
+                        <p class="mt-12 text-gray-300 italic">"Dịch vụ ở Enc Store rất nhanh và uy tín. Mình mua Google
+                            One được hỗ trợ nhiệt tình, giá lại tốt nữa."</p>
+                        <div class="mt-4 pt-4 border-t border-gray-700">
+                            <p class="text-lg font-bold text-white">Sun Idea</p>
+                            <p class="text-sm text-gray-400">Khách hàng EnC Store</p>
+                        </div>
                     </div>
-                    <button class="carousel-control testimonials-prev" aria-label="Đánh giá trước"><i class="fas fa-chevron-left"></i></button>
-                    <button class="carousel-control testimonials-next" aria-label="Đánh giá tiếp theo"><i class="fas fa-chevron-right"></i></button>
+                    <!-- Testimonial Card 2 -->
+                    <div
+                        class="bg-gray-800 p-8 rounded-xl shadow-lg relative border border-gray-700 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="absolute top-0 left-8 transform -translate-y-1/2">
+                            <img src="assets/vutran.jpg" alt="Ảnh đại diện của Vu Tran"
+                                class="w-20 h-20 rounded-full border-4 border-gray-800 shadow-md">
+                        </div>
+                        <i class="fas fa-quote-left text-purple-500 text-3xl absolute top-8 right-8 opacity-20"></i>
+                        <p class="mt-12 text-gray-300 italic">"Thiết kế website rất đẹp, nếu có dịp mình xin ủng hộ
+                            tiếp!"</p>
+                        <div class="mt-4 pt-4 border-t border-gray-700">
+                            <p class="text-lg font-bold text-white">Vu Tran</p>
+                            <p class="text-sm text-gray-400">Khách hàng Thiết kế Web</p>
+                        </div>
+                    </div>
+                    <!-- Testimonial Card 3 -->
+                    <div
+                        class="bg-gray-800 p-8 rounded-xl shadow-lg relative border border-gray-700 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="absolute top-0 left-8 transform -translate-y-1/2">
+                            <img src="assets/tmie_pile.jpg" alt="Ảnh đại diện của Tmie Pile"
+                                class="w-20 h-20 rounded-full border-4 border-gray-800 shadow-md">
+                        </div>
+                        <i class="fas fa-quote-left text-green-500 text-3xl absolute top-8 right-8 opacity-20"></i>
+                        <p class="mt-12 text-gray-300 italic">"Rất hài lòng với sự chuyên nghiệp và hỗ trợ nhanh chóng
+                            từ caothongdev."</p>
+                        <div class="mt-4 pt-4 border-t border-gray-700">
+                            <p class="text-lg font-bold text-white">Tmie Pile</p>
+                            <p class="text-sm text-gray-400">Khách hàng thứ N</p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- 7. Contact Section -->
             <section id="contact" class="content-section" aria-labelledby="contact-heading">
-                <h2 id="contact-heading">Kết nối & Hợp tác 📬</h2>
-                <p class="text-secondary mb-3">Bạn có ý tưởng hay dự án muốn hợp tác, hoặc đơn giản chỉ muốn gửi lời chào? Đừng ngần ngại liên hệ với tôi qua form dưới đây hoặc các mạng xã hội.</p>
+                <h2 id="contact-heading" class=text-center>Kết nối & Hợp tác 📬</h2>
+                <p class="text-secondary mb-3">Bạn có ý tưởng hay dự án muốn hợp tác, hoặc đơn giản chỉ muốn gửi lời
+                    chào? Đừng ngần ngại liên hệ với tôi qua form dưới đây hoặc các mạng xã hội.</p>
                 <div class="contact-form-wrapper">
                     <form id="contact-form" action="https://formspree.io/f/mkgbjjzw" method="POST">
                         <div class="form-group">
@@ -459,11 +645,13 @@
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required placeholder="Email để tôi có thể liên lạc lại...">
+                            <input type="email" id="email" name="email" required
+                                placeholder="Email để tôi có thể liên lạc lại...">
                         </div>
                         <div class="form-group full-width">
                             <label for="message">Lời nhắn</label>
-                            <textarea id="message" name="message" rows="5" required placeholder="Nội dung lời nhắn của bạn..."></textarea>
+                            <textarea id="message" name="message" rows="5" required
+                                placeholder="Nội dung lời nhắn của bạn..."></textarea>
                         </div>
                         <div class="form-actions full-width">
                             <button type="submit" class="btn btn-primary">Gửi Lời Nhắn</button>
@@ -475,80 +663,92 @@
                     <div class="contact-links-wrapper">
                         <h3 class="contact-subtitle">Hoặc qua Mạng xã hội & Cộng đồng</h3>
                         <div class="contact-links-grid">
-                             <a href="https://www.facebook.com/caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                 <img src="assets/icons/facebook.png" alt="Facebook" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
-                                 <span>Facebook</span>
-                             </a>
-                             <a href="https://zalo.me/0794243312" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                 <img src="assets/icons/zalo.png" alt="Zalo" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
-                                 <span>Zalo</span>
-                             </a>
-                             <a href="https://t.me/lightshopvn" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                 <img src="assets/icons/telegram.webp" alt="Telegram" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
-                                 <span>Telegram</span>
-                             </a>
-                             <a href="https://youtube.com/@caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                 <img src="assets/icons/youtube.webp" alt="YouTube" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
-                                 <span>YouTube</span>
-                             </a>
-                            <a href="https://www.tiktok.com/@caothongdev" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                 <img src="assets/icons/tiktok.webp" alt="TikTok" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
-                                 <span>TikTok</span>
-                             </a>
-                            <a href="https://discord.gg/your-server-invite" class="contact-link-item" target="_blank" rel="noopener noreferrer">
-                                 <img src="assets/icons/discord_logo.jpg" alt="Discord" class="contact-logo" style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
-                                 <span>Discord</span>
-                             </a>
+                            <a href="https://www.facebook.com/caothongdev" class="contact-link-item" target="_blank"
+                                rel="noopener noreferrer">
+                                <img src="assets/icons/facebook.png" alt="Facebook" class="contact-logo"
+                                    style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>Facebook</span>
+                            </a>
+                            <a href="https://zalo.me/0794243312" class="contact-link-item" target="_blank"
+                                rel="noopener noreferrer">
+                                <img src="assets/icons/zalo.png" alt="Zalo" class="contact-logo"
+                                    style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>Zalo</span>
+                            </a>
+                            <a href="https://t.me/lightshopvn" class="contact-link-item" target="_blank"
+                                rel="noopener noreferrer">
+                                <img src="assets/icons/telegram.webp" alt="Telegram" class="contact-logo"
+                                    style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>Telegram</span>
+                            </a>
+                            <a href="https://youtube.com/@caothongdev" class="contact-link-item" target="_blank"
+                                rel="noopener noreferrer">
+                                <img src="assets/icons/youtube.webp" alt="YouTube" class="contact-logo"
+                                    style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>YouTube</span>
+                            </a>
+                            <a href="https://www.tiktok.com/@caothongdev" class="contact-link-item" target="_blank"
+                                rel="noopener noreferrer">
+                                <img src="assets/icons/tiktok.webp" alt="TikTok" class="contact-logo"
+                                    style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>TikTok</span>
+                            </a>
+                            <a href="https://discord.gg/your-server-invite" class="contact-link-item" target="_blank"
+                                rel="noopener noreferrer">
+                                <img src="assets/icons/discord_logo.jpg" alt="Discord" class="contact-logo"
+                                    style="width:24px;height:24px;object-fit:contain;vertical-align:middle;">
+                                <span>Discord</span>
+                            </a>
                         </div>
                     </div>
                 </div>
+            </section>
+            <!-- Donate Section -->
+            <section id="donate" class="content-section" aria-labelledby="donate-heading">
+                <div class="text-center">
+                    <h2 id="donate-heading" class="text-3xl font-bold text-white mb-4">Ủng hộ tôi một ly cà phê ☕</h2>
+                    <p class="text-gray-400 mb-12 max-w-2xl mx-auto">Nếu bạn yêu thích các dự án của tôi và muốn hỗ trợ,
+                        mọi đóng góp của bạn đều là nguồn động viên to lớn để tôi tiếp tục sáng tạo và chia sẻ.</p>
+                </div>
+                <div class="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+                    <!-- Momo Donate Card -->
+                    <div class="flex justify-center items-center min-h-[50vh]">
+                        <div
+                            class="bg-dark-3 rounded-xl p-6 text-center border border-dark hover:border-pink-500 transition-colors duration-300 shadow-lg w-full max-w-xs sm:max-w-sm">
+                            <img src="assets/momo.png" alt="Momo Logo" class="w-20 h-20 mx-auto mb-4 rounded-lg">
+                            <h3 class="text-lg font-semibold text-white mb-1">Nguyễn Thị Hiệp</h3>
+                            <p class="text-gray-400 mb-2">Ví Momo</p>
+                            <div class="my-4">
+                                <img src="assets/momo_donate.jfif" alt="QR Code Momo"
+                                    class="mx-auto rounded-md border-2 border-dark w-40 h-40 object-cover">
+                            </div>
+                            <div class="bg-dark-1 p-3 rounded-md flex items-center justify-between">
+                                <span id="momo-account" class="font-mono text-base text-gray-300">0795483703</span>
+                                <button
+                                    class="btn-copy-account bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-3 rounded-md transition-transform transform hover:scale-105"
+                                    data-clipboard-target="#momo-account" title="Sao chép số Momo">
+                                    <i class="far fa-copy mr-1"></i> Sao chép
+                                </button>
+                            </div>
+                        </div>
+                    </div>
             </section>
 
-            <!-- 8. Payment Section -->
-            <section id="payment" class="content-section" aria-labelledby="payment-heading">
-                <h2 id="payment-heading">Thông tin thanh toán 💳</h2>
-                <div class="payment-grid">
-                    <div class="payment-item">
-                        <div class="payment-item-header">
-                            <img src="assets/momo.png" alt="Logo Momo" class="payment-logo" loading="lazy">
-                            <span class="payment-label">Nguyễn Thị Hiệp</span>
-                        </div>
-                        <div class="payment-value-container">
-                            <span class="payment-value" id="momo-account">0795483703</span>
-                            <button class="btn btn-small btn-secondary btn-copy-account" data-clipboard-target="#momo-account" title="Sao chép số Momo">
-                                <i class="far fa-copy"></i> Sao chép
-                            </button>
-                        </div>
-                        <span class="payment-provider">Momo</span>
-                    </div>
-                    <div class="payment-item">
-                        <div class="payment-item-header">
-                            <img src="assets/mbbank-logo.png" alt="Logo MB Bank" class="payment-logo" loading="lazy">
-                            <span class="payment-label">Hoàng Cao Thống</span>
-                        </div>
-                        <div class="payment-value-container">
-                            <span class="payment-value" id="mbbank-account">0794243312</span>
-                            <button class="btn btn-small btn-secondary btn-copy-account" data-clipboard-target="#mbbank-account" title="Sao chép số MB Bank">
-                                <i class="far fa-copy"></i> Sao chép
-                            </button>
-                        </div>
-                        <span class="payment-provider">MB Bank</span>
-                    </div>
-                </div>
-            </section>
 
             <!-- Page Footer -->
             <footer class="page-footer">
                 <div class="footer-content">
                     <div class="footer-quote">
-                        <span class="status-indicator footer-online-indicator" aria-label="Trạng thái Online" title="Online"></span>
+                        <span class="status-indicator footer-online-indicator" aria-label="Trạng thái Online"
+                            title="Online"></span>
                         <p id="footer-dynamic-quote">Cuộc sống là hành trình bất ngờ...</p>
                     </div>
                     <div class="footer-copyright">
                         &copy; <span id="current-year"></span> Hoàng Cao Thống (caothongdev). All Rights Reserved.
                     </div>
                 </div>
-                <button id="scroll-to-top-btn" class="btn btn-secondary btn-small" title="Lên đầu trang"><i class="fas fa-arrow-up"></i></button>
+                <button id="scroll-to-top-btn" class="btn btn-secondary btn-small" title="Lên đầu trang"><i
+                        class="fas fa-arrow-up"></i></button>
             </footer>
 
         </div><!-- .main-container -->
@@ -558,13 +758,14 @@
     <!-- MODALS & OVERLAYS                                                    -->
     <!-- =================================================================== -->
 
-    <div id="case-study-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="case-study-modal-title">
+    <div id="case-study-modal" class="modal-overlay hidden" role="dialog" aria-modal="true"
+        aria-labelledby="case-study-modal-title">
         <div class="modal-content case-study-modal-content">
             <button class="modal-close-btn" aria-label="Đóng Case Study">&times;</button>
             <h3 id="case-study-modal-title"></h3>
             <div class="case-study-modal-body">
                 <img id="case-study-modal-image" src="" alt="Hình ảnh chi tiết dự án" loading="lazy">
-                
+
                 <h4><i class="fas fa-user-tie"></i> Vai trò trong dự án</h4>
                 <p id="case-study-modal-role"></p>
 
@@ -596,7 +797,8 @@
         </div>
     </div>
 
-    <div id="command-palette-overlay" class="prompt-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="command-palette-title">
+    <div id="command-palette-overlay" class="prompt-overlay hidden" role="dialog" aria-modal="true"
+        aria-labelledby="command-palette-title">
         <div id="command-palette-box" class="prompt-box">
             <div class="command-palette-header">
                 <i class="fas fa-search"></i>
@@ -604,12 +806,14 @@
             </div>
             <ul id="command-palette-results"></ul>
             <div class="command-palette-footer">
-                <span>Dùng <kbd>↑</kbd> <kbd>↓</kbd> để di chuyển, <kbd>Enter</kbd> để chọn, <kbd>Esc</kbd> để đóng</span>
+                <span>Dùng <kbd>↑</kbd> <kbd>↓</kbd> để di chuyển, <kbd>Enter</kbd> để chọn, <kbd>Esc</kbd> để
+                    đóng</span>
             </div>
         </div>
     </div>
 
-    <div id="music-prompt-overlay" class="prompt-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="music-prompt-title" aria-describedby="music-prompt-desc">
+    <div id="music-prompt-overlay" class="prompt-overlay hidden" role="dialog" aria-modal="true"
+        aria-labelledby="music-prompt-title" aria-describedby="music-prompt-desc">
         <div id="music-prompt-box" class="prompt-box">
             <h3 id="music-prompt-title">Bạn có muốn bật nhạc nền không?</h3>
             <div class="prompt-actions-wrapper" id="music-prompt-desc">
@@ -625,13 +829,15 @@
         </div>
     </div>
 
-    <div id="lightbox-overlay" class="lightbox-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="lightbox-image-alt">
+    <div id="lightbox-overlay" class="lightbox-overlay hidden" role="dialog" aria-modal="true"
+        aria-labelledby="lightbox-image-alt">
         <span id="lightbox-close" class="lightbox-close" aria-label="Đóng ảnh phóng to" tabindex="0">&times;</span>
         <img id="lightbox-image" src="" alt="" aria-live="polite">
         <p id="lightbox-image-alt" class="visually-hidden">Ảnh được phóng to</p>
     </div>
 
-    <div id="bio-details-modal" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="bio-modal-title">
+    <div id="bio-details-modal" class="modal-overlay hidden" role="dialog" aria-modal="true"
+        aria-labelledby="bio-modal-title">
         <div class="modal-content bio-modal-content">
             <h3 id="bio-modal-title">Thông tin chi tiết về Hoàng Cao Thống</h3>
             <div id="bio-modal-body">
@@ -646,10 +852,11 @@
     <div id="achievement-container"></div>
     <div id="controls-container">
         <button id="volume-btn" aria-label="Tắt hoặc bật tiếng và điều chỉnh âm lượng"></button>
-        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2" class="hidden" aria-label="Điều chỉnh âm lượng">
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2" class="hidden"
+            aria-label="Điều chỉnh âm lượng">
         <div id="clock" aria-label="Thời gian hiện tại" role="timer">00:00:00</div>
     </div>
-    
+
     <div id="focus-mode-overlay" class="focus-mode-overlay hidden">
         <div class="focus-quote" id="focus-quote"></div>
         <div class="focus-pomodoro">
